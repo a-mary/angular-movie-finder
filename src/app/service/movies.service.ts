@@ -185,6 +185,19 @@ export class MoviesService {
     ));
   }
 
+  discoverMoviesByCast(id: string, page: string) {
+    return this.http.get<MoviePage>('https://api.themoviedb.org/3/discover/movie', {
+      params: new HttpParams()
+        .set('api_key', this.apikey)
+        .set('sort_by', 'popularity.desc')
+        .set('with_cast', id)
+        .set('page', page)
+    }).pipe(map(res => {
+        return res;
+      }
+    ));
+  }
+
   getRecommendedMovies(id: string, page: string) {
     return this.http.get<MoviePage>('https://api.themoviedb.org/3/movie/' + id + '/recommendations', {
       params: new HttpParams().set('api_key', this.apikey).set('page', page)
@@ -221,9 +234,9 @@ export class MoviesService {
     });
   }
 
-  getMovieCredits(id: string) {
+  getMovieCredits(id: string, page: string) {
     return this.http.get<PersonMovieCredits>('https://api.themoviedb.org/3/person/' + id + '/movie_credits', {
-      params: new HttpParams().set('api_key', this.apikey)
+      params: new HttpParams().set('api_key', this.apikey).set('page', page)
     });
   }
 

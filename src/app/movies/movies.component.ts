@@ -95,14 +95,23 @@ export class MoviesComponent implements OnInit {
           });
         });
       } else if (this.person) {
-        this.router.params.subscribe((params) => {
-          const param = 'id';
-          const id = params[param];
-          this.moviesService.getMovieCredits(id).subscribe(res => {
-            this.title = 'Filmography';
-            this.movies = res.cast;
+        this.router.paramMap.subscribe((params) => {
+          this.routerLink = '/actor/' + params.get('id') + '/';
+          this.router.queryParamMap.subscribe((qParams) => {
+            this.moviesService.discoverMoviesByCast(params.get('id'),
+              (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
+              this.title = 'Filmography';
+              if (res.results.length > 0) {
+                this.movies = res.results;
+                this.totalPages = res.total_pages;
+                this.currentPage = res.page;
+                this.updatePageLinks();
+                this.active = this.currentPage === 1;
+              }
+            });
           });
         });
+
       }
     });
   }
