@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  width: 100%;
+  min-width: 327px;
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+//* {
+//-ms-overflow-style: none;  /* IE and Edge */
+//scrollbar-width: none;  /* Firefox */
+//}
+
+.mat-drawer-inner-container::-webkit-scrollbar {
+  display: none;
+}
+.mat-form-field-infix{
+  border-top: 0.25em solid transparent;
+
+}
+
+.mat-form-field-prefix {
+  top: 6px;
+  margin-right: 7px;
+}

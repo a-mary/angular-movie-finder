@@ -1,0 +1,47 @@
+<div class="genre-container" *ngIf="movies !== null">
+  <h3>{{title === 'top' ? 'top rated' : title}}</h3>
+  <div class="movies">
+    <app-movie-card *ngFor="let movie of movies; let i = index;" [movie]="movie"></app-movie-card>
+  </div>
+
+</div>
+
+<!--<div class="center">-->
+<!--  <div class="pagination">-->
+<!--    <a href="#">&laquo;</a>-->
+<!--    <a href="#">1</a>-->
+<!--    <a href="#" class="active">2</a>-->
+<!--    <a href="#">3</a>-->
+<!--    <a href="#">4</a>-->
+<!--    <a href="#">5</a>-->
+<!--    <span>...</span>-->
+<!--    <a href="#">6</a>-->
+<!--    <a href="#">&raquo;</a>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div *ngIf="movies" class="center">
+  <ul class="pagination">
+    <li>
+      <a [class.disabled]="currentPage === 1" routerLink="{{routerLink}}"
+         [queryParams]="{page: currentPage - 1}">&#10094;</a>
+    </li>
+
+    <li class="small-screen">
+      <span>{{currentPage}} / {{totalPages}}</span>
+    </li>
+
+    <li class="pages" *ngFor="let page of pages">
+      <a *ngIf="page === '1' " [class.active]="active" routerLink="{{routerLink}}"
+         [queryParams]="{page: page}">{{page}}</a>
+      <a *ngIf="page !== '1' && page !== '...' " routerLink="{{routerLink}}" [queryParams]="{page: page}"
+         routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">{{page}}</a>
+      <span *ngIf="page === '...' ">{{page}}</span>
+    </li>
+
+    <li>
+      <a href="#" [class.disabled]="currentPage === totalPages" routerLink="{{routerLink}}"
+         [queryParams]="{page: currentPage + 1}">&#10095;</a>
+    </li>
+  </ul>
+</div>

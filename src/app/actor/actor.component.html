@@ -1,0 +1,19 @@
+<div class="movie-container" *ngIf="personDetail">
+  <div class="img-container">
+    <img src="https://image.tmdb.org/t/p/w500/{{personDetail.profile_path}}" alt="poster">
+  </div>
+  <div class="content-container">
+    <h1>{{personDetail.name}}</h1>
+
+    <p><span>Born:</span> {{personDetail.birthday}} in {{personDetail.place_of_birth}}</p>
+
+    <h2 class="bio">Biography</h2>
+    <p class="overview">
+      {{personDetail.biography}}
+    </p>
+  </div>
+</div>
+
+<div>
+  <app-movies [person]="true"></app-movies>
+</div>

@@ -1,0 +1,40 @@
+<div class="movie-container" *ngIf="movieDetails">
+  <div class="img-container">
+    <img src="https://image.tmdb.org/t/p/w500/{{movieDetails.poster_path}}" alt="poster">
+  </div>
+  <div class="content-container">
+    <h1>{{movieDetails.title}}
+
+    </h1>
+    <p>{{movieDetails.tagline}}</p>
+
+    <span class="flex">
+      <span class="vote_avg">
+
+        {{movieDetails.vote_average}}
+      </span>
+      <span>
+
+      <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>
+      </span>
+    </span>
+
+    <mat-chip-list class="genre" aria-label="Fish selection">
+      <mat-chip routerLink="/genres/{{genre.id}}/{{genre.name}}"
+                *ngFor="let genre of movieDetails.genres">{{genre.name}}</mat-chip>
+    </mat-chip-list>
+
+    <h2>Overview</h2>
+    <p class="overview">
+      {{movieDetails.overview}}
+    </p>
+
+    <mat-chip-list class="cast">
+      <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts | slice:0:8">{{cast.name}}</mat-chip>
+    </mat-chip-list>
+  </div>
+</div>
+
+<div>
+  <app-movies [similar]="true"></app-movies>
+</div>

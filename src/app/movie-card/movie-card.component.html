@@ -1,0 +1,47 @@
+<!--<p>movie-card works!</p>-->
+
+<!--  <h2>{{movie.title}}</h2>-->
+
+
+<!--<div class="movie-card">-->
+
+<a routerLink="/movie/{{movie.id}}" [state]="stars">
+
+  <mat-card>
+    <img mat-card-image alt='The movie titled {{movie.title}}' src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>
+    <img mat-card-image alt="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg" *ngIf="!movie.poster_path">
+
+    <mat-card-content>
+      <h2>{{movie.title}}</h2>
+      <span>{{movie.release_date | date: 'yyyy'}}</span>
+
+      <!--        <span class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon>9.8<mat-icon>star_border</mat-icon>9.8</span>-->
+      <span class="float-right">
+        <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>
+<!--        <mat-icon>{{showIcon(0)}}</mat-icon>-->
+<!--        <mat-icon>{{showIcon(1)}}</mat-icon>-->
+<!--        <mat-icon>{{showIcon(2)}}</mat-icon>-->
+<!--        <mat-icon>{{showIcon(3)}}</mat-icon>-->
+<!--        <mat-icon>{{showIcon(4)}}</mat-icon>-->
+      </span>
+      <!--        <span class="float-right"><mat-icon>star</mat-icon>9.8</span>-->
+      <!--        <h2 class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon><mat-icon>star_border</mat-icon></h2>-->
+    </mat-card-content>
+  </mat-card>
+
+  <!--    <div>-->
+  <!--      <img width="200" alt='The movie titled {{movie.title}}'-->
+  <!--           src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>-->
+  <!--      <div class="desc">-->
+  <!--        <h2>{{movie.title}}</h2>-->
+  <!--&lt;!&ndash;        <p>{{movie.release_date | date : 'yyyy'}}</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;        <p>{{movie.release_date}}</p>&ndash;&gt;-->
+  <!--        &lt;!&ndash;      <small class="label label-success pull-right" *ngIf="movie.vote_average">&ndash;&gt;-->
+  <!--        &lt;!&ndash;        {{movie.vote_average}}&ndash;&gt;-->
+  <!--        &lt;!&ndash;        <i class="glyphicon glyphicon-star"></i>&ndash;&gt;-->
+  <!--        &lt;!&ndash;      </small>&ndash;&gt;-->
+  <!--      </div>-->
+  <!--    </div>-->
+
+</a>
+<!--</div>-->

@@ -1,0 +1,136 @@
+.movie-container {
+  //display: flex;
+  //width: 100%;
+  //flex-direction: column;
+  //align-items: center;
+
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto 5rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .movie-container {
+    flex-direction: column;
+  }
+
+  .content-container {
+    max-width: 90% !important;
+  }
+
+  .img-container {
+    max-width: 40% !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .img-container {
+    max-width: 48% !important;
+  }
+}
+
+.img-container {
+  width: 100%;
+  max-width: 24%;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  display: flex;
+  flex: 1 1 40%;
+  padding: 2rem;
+}
+.content-container {
+  width: 100%;
+  max-width: 30%;
+  padding: 2rem;
+  flex: 1 1 60%;
+}
+
+.content-container h1 {
+  font-size: 1.8rem;
+}
+.overview {
+  font-size: 1rem;
+  //margin-top: 8px;
+}
+
+mat-chip-list + h2 {
+  margin: 15px 0 10px;
+}
+
+img {
+  border-radius: 0.8rem;
+  max-height: 100%;
+  height: auto;
+  object-fit: cover;
+  max-width: 100%;
+  //box-shadow: 0rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+mat-chip {
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  margin-bottom: 14px;
+}
+.vote_avg {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  margin-right: 10px;
+}
+
+.cast mat-chip {
+  font-size: 12px;
+  background-color: #607d8bd6;
+
+  //background-color: #607D8B;
+  //background-color: #607D8B;
+  color: white;
+}
+
+.genre mat-chip {
+  //color: white;
+  color: #3F51B5;
+}
+
+
+////img {
+////  width: 100%;
+////}
+////
+//
+//
+//.row {
+//  display: flex;
+//  -webkit-box-align: center;
+//  align-items: center;
+//  -webkit-box-pack: center;
+//  justify-content: center;
+//  width: 60%;
+//  max-width: 120rem;
+//  margin: 0px auto 7rem;
+//  transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+//}
+//
+
+//
+//img {
+//  height: auto;
+//  width: 100%;
+//}
