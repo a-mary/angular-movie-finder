@@ -13,6 +13,20 @@ img {
   object-fit: cover;
   //height: 26rem;
   height: 23.845rem;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.card-content {
+  position: absolute;
+  top: 290px;
+  color: white;
+  padding: 0 16px 16px;
+
+}
+
+.card-content h2 {
+  color: white;
 }
 
 mat-card {
@@ -20,6 +34,9 @@ mat-card {
   border-radius: 7px;
   //width: fit-content;
   margin: 0;
+  height: 382px;
+  position: relative;
+  background-size: cover !important;
 }
 
 .mat-card-image:first-child {
@@ -28,6 +45,27 @@ mat-card {
 
 mat-card-content {
   padding: 0 16px 16px;
+}
+
+.card-content {
+  width: 221px;
+  padding: 0 16px;
+}
+
+.mat-card img:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, #000 50%, transparent);
+  z-index: 1;
+}
+
+.mat-card img {
+  //box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+  position: relative;
 }
 
 img {
@@ -51,6 +89,7 @@ img {
   float: right;
   position: relative;
   top: -3px;
+  color: #ff9800;
 }
 
 :host {

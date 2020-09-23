@@ -55,6 +55,22 @@ export interface MovieDetails {
   title: string;
   vote_average: number;
   vote_count: number;
+  videos: Videos;
+}
+
+export interface Videos {
+  results: Video[];
+}
+
+export interface Video {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  site: string;
+  size: number;
+  type: string;
 }
 
 export interface Movie {
@@ -155,14 +171,13 @@ export class MoviesService {
   getMovieList(type: string, page: string) {
     return this.http.get<MoviePage>('https://api.themoviedb.org/3/movie/' + (type === 'top' ? 'top_rated' : type), {
       params: new HttpParams().set('api_key', this.apikey).set('page', page)
-    }).pipe(map(res => {
-      return res;
-    }), catchError(error => throwError(error.message || error)));
+    });
+    // catchError(error => throwError(error.message || error)));
   }
 
   getMovie(id: string) {
     return this.http.get<MovieDetails>('https://api.themoviedb.org/3/movie/' + id, {
-      params: new HttpParams().set('api_key', this.apikey)
+      params: new HttpParams().set('api_key', this.apikey).set('append_to_response', 'videos')
     });
   }
 

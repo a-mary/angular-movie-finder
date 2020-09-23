@@ -7,26 +7,35 @@
 
 <a routerLink="/movie/{{movie.id}}" [state]="stars">
 
-  <mat-card>
-    <img mat-card-image alt='The movie titled {{movie.title}}' src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>
-    <img mat-card-image alt="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg" *ngIf="!movie.poster_path">
+<!--  background: linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 29%), url(https://image.tmdb.org/t/p/w300//aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg);-->
 
-    <mat-card-content>
+  <mat-card [ngStyle]="{'background': 'linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 40%), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">
+<!--    <img mat-card-image alt='The movie titled {{movie.title}}' src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>-->
+<!--    <img mat-card-image alt="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg" *ngIf="!movie.poster_path">-->
+
+    <div class="card-content">
       <h2>{{movie.title}}</h2>
       <span>{{movie.release_date | date: 'yyyy'}}</span>
 
       <!--        <span class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon>9.8<mat-icon>star_border</mat-icon>9.8</span>-->
       <span class="float-right">
         <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>
-<!--        <mat-icon>{{showIcon(0)}}</mat-icon>-->
-<!--        <mat-icon>{{showIcon(1)}}</mat-icon>-->
-<!--        <mat-icon>{{showIcon(2)}}</mat-icon>-->
-<!--        <mat-icon>{{showIcon(3)}}</mat-icon>-->
-<!--        <mat-icon>{{showIcon(4)}}</mat-icon>-->
       </span>
-      <!--        <span class="float-right"><mat-icon>star</mat-icon>9.8</span>-->
-      <!--        <h2 class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon><mat-icon>star_border</mat-icon></h2>-->
-    </mat-card-content>
+    </div>
+
+
+
+<!--    <mat-card-content>-->
+<!--      <h2>{{movie.title}}</h2>-->
+<!--      <span>{{movie.release_date | date: 'yyyy'}}</span>-->
+
+<!--      &lt;!&ndash;        <span class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon>9.8<mat-icon>star_border</mat-icon>9.8</span>&ndash;&gt;-->
+<!--      <span class="float-right">-->
+<!--        <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>-->
+<!--      </span>-->
+<!--      &lt;!&ndash;        <span class="float-right"><mat-icon>star</mat-icon>9.8</span>&ndash;&gt;-->
+<!--      &lt;!&ndash;        <h2 class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon><mat-icon>star_border</mat-icon></h2>&ndash;&gt;-->
+<!--    </mat-card-content>-->
   </mat-card>
 
   <!--    <div>-->

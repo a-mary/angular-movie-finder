@@ -3,9 +3,17 @@
           aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-
+<!--  <a mat-button [routerLink]="'/popular'">  Movie Finder </a>-->
   <div class="inner-header">
+<!--    <mat-icon>movie</mat-icon>-->
+<!--      <a mat-button [routerLink]="'/popular'">  Movie Finder </a>-->
+
+<!--    <div>movi</div>-->
     <div class="link-container">
+
+<!--      <mat-icon>movie</mat-icon>-->
+
+<!--      <a mat-button [routerLink]="'/popular'"> <mat-icon>movie</mat-icon> </a>-->
       <a mat-button [routerLink]="'/popular'"> Popular </a>
       <a mat-button [routerLink]="'/top'"> Top Rated </a>
       <a mat-button [routerLink]="'/upcoming'"> Upcoming </a>
@@ -42,10 +50,12 @@
       <a class="nav-link" mat-list-item routerLink="/top" routerLinkActive="active">Top Rated</a>
       <a class="nav-link" mat-list-item routerLink="/upcoming" routerLinkActive="active">Upcoming</a>
       <a class="genre-link" mat-list-item *ngFor="let genre of genres" routerLink="/genres/{{genre.id}}/{{genre.name}}/"
-         routerLinkActive="active" >{{genre.name}} </a>
+         routerLinkActive="active">{{genre.name}} </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
+
+
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -63,11 +63,9 @@ export class MoviesComponent implements OnInit {
       } else if (data.path === 'search') {
         this.router.paramMap.subscribe((params) => {
           const searchStr = params.get('title');
-          console.log(searchStr);
           this.routerLink = '/search/' + searchStr;
           this.router.queryParamMap.subscribe((qParams) => {
             this.moviesService.searchMovies(searchStr, (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
-              console.log(res.total_pages);
               this.title = 'Search results';
               this.movies = res.results;
               this.totalPages = res.total_pages;
@@ -128,7 +126,6 @@ export class MoviesComponent implements OnInit {
       }
       this.pages.push(String(this.calculatePageNumber(i, this.currentPage, 7, this.totalPages)));
     }
-
   }
 
    calculatePageNumber(i: number, currentPage: number, paginationRange: number, totalPages: number) {

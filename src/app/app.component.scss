@@ -288,10 +288,13 @@ ul {
 .inner-header {
   height: 40px;
 
+  background-color: transparent!important;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  //background: linear-gradient(to right, #ffffff99 0%, #ffffffe3 100%), url(https://image.tmdb.org/t/p/original//zzWGRw277MNoCs3zhyG3YmYQsXv.jpg);
+  //background-repeat: no-repeat;
+  //background-attachment: fixed;
 }
 
 mat-form-field {
@@ -316,7 +319,7 @@ mat-toolbar {
 
 mat-sidenav-container {
   min-height: 100%;
-  margin-top: 40px;
+  //margin-top: 40px;
 }
 
 mat-sidenav-content::-webkit-scrollbar {
@@ -324,7 +327,9 @@ mat-sidenav-content::-webkit-scrollbar {
 }
 
 mat-sidenav-content {
-  padding: 16px 19px !important;
+  //padding: 16px 19px !important;
+  padding: 0 !important;
+  margin-top: 40px;
 }
 
 mat-sidenav {

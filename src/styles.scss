@@ -26,3 +26,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   top: 6px;
   margin-right: 7px;
 }
+
+.mat-tab-label .mat-tab-label-content {
+  //display: inline-flex;
+  //justify-content: center;
+  //align-items: center;
+  //white-space: nowrap;
+  color: black !important;
+  font: 500 20px/32px Roboto,Helvetica Neue,sans-serif !important;
+}
+
+.mat-tab-body-wrapper{
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.mat-card-image:first-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}

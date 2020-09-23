@@ -12,6 +12,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { MovieComponent } from './movie/movie.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { ActorComponent } from './actor/actor.component';
+import { DialogBodyComponent } from './dialog-body/dialog-body.component';
+import { MinToHrAndMinPipe } from './pipes/min-to-hr-and-min.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { ActorComponent } from './actor/actor.component';
     MovieComponent,
     MovieCardComponent,
     ActorComponent,
+    DialogBodyComponent,
+    MinToHrAndMinPipe,
   ],
   imports: [
     BrowserModule,
