@@ -1,8 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Cast, MovieDetails, MoviesService} from '../service/movies.service';
 import {ActivatedRoute} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogBodyComponent} from '../dialog-body/dialog-body.component';
 
 @Component({
   selector: 'app-movie',
@@ -11,14 +10,14 @@ import {DialogBodyComponent} from '../dialog-body/dialog-body.component';
 })
 export class MovieComponent implements OnInit {
 
+  defaultUrl = 'https://www.youtube.com/embed/';
+  video: string;
   movieDetails: MovieDetails;
   stars: string[] = Array();
   casts: Cast[];
   isLoading: boolean;
 
   constructor(private moviesServices: MoviesService, private router: ActivatedRoute, public dialog: MatDialog) {
-    // this.isLoading = true;
-    // console.log(this.isLoading + ' lt');
   }
 
   ngOnInit(): void {
@@ -29,8 +28,8 @@ export class MovieComponent implements OnInit {
         const param = 'id';
         const id = params[param];
         this.moviesServices.getMovie(id).subscribe(movie => {
-
           this.movieDetails = movie;
+          this.video = this.defaultUrl + this.movieDetails.videos.results[0].key;
           this.stars = [];
           this.moviesServices.fillStarArr(movie.vote_average, this.stars);
         });
@@ -42,17 +41,17 @@ export class MovieComponent implements OnInit {
     );
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogBodyComponent, {
-      data: {
-        poster: this.movieDetails.poster_path
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+  // openDialog() {
+  //   const dialogRef = this.dialog.open(DialogBodyComponent, {
+  //     data: {
+  //       poster: this.movieDetails.poster_path
+  //     }
+  //   });
+  //
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+  //   });
+  // }
 
   // ngAfterViewInit(): void {
   //   this.isLoading = false;

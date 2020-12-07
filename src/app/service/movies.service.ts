@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {throwError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 export interface Genre {
   id: number;
@@ -72,6 +71,7 @@ export interface Video {
   size: number;
   type: string;
 }
+
 
 export interface Movie {
   // Properties
