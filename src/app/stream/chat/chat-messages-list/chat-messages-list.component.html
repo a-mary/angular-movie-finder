@@ -1,0 +1,13 @@
+<div class="chat-messages-list">
+<!--  <div *ngFor="let message of feed" class="chat-msg" >-->
+
+  <div *ngFor="let message of feed | async" class="chat-msg" >
+    <chat-message [chatMessage]="message" ></chat-message>
+<!--    <div class="chat-msg">{{message.message}}</div>-->
+
+  </div>
+<!--  <div class="chat-msg">heello</div>-->
+<!--  <div class="chat-msg">heello</div>-->
+<!--  <div class="chat-msg">heello</div>-->
+<!--  <div class="chat-msg">msg</div>-->
+</div>

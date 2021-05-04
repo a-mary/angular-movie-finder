@@ -1,9 +1,26 @@
-import {Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {Genre, Movie, MoviesService} from './service/movies.service';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Injectable, OnInit,
+  QueryList,
+  Renderer2,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
+import {MoviesService} from './services/movies.service';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, take, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {Genre, Movie} from './shared/interfaces';
+import {Meta, Title} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material/dialog';
+import {AuthModalComponent} from './auth-modal/auth-modal.component';
+import {AuthService, User} from './services/auth.service';
+import {log} from 'util';
+import {errorComparator} from 'tslint/lib/verify/lintError';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +28,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss'],
   providers: [MoviesService]
 })
-export class AppComponent {
+export class AppComponent  implements OnInit{
   title = 'angular-movie-finder';
   genres: Array<Genre>;
   search: boolean;
@@ -23,7 +40,27 @@ export class AppComponent {
   @ViewChild('inputElement') input;
   @ViewChild('mtitle') mtitle;
   @ViewChildren('movieTitle') movieTitles: QueryList<ElementRef>;
+  // @ViewChild('dropbtn') dropbtn: ElementRef;
+  // @ViewChild('userDropdownBtn') userDropdownBtn: ElementRef;
   currentFocus: number;
+  isDropdownDisplay: boolean;
+  dropdownDisplay: string;
+  user: User;
+
+  isLoading: boolean;
+
+  // @HostListener('document:click', ['$event.target'])
+  // clickout(event) {
+  //   console.log('tt' + event.target === this.dropbtn.nativeElement)
+  //   console.log('ttu' + this.dropbtn.nativeElement)
+  //   // event.target;
+  //   if (!this.dropbtn.nativeElement.contains(event)) {
+  //     // this.changeDropdown();
+  //     // this.dropdownDisplay = 'false'
+  //     console.log('falseeee')
+  //
+  //   }
+  // }
 
   // opened = true;
 
@@ -34,12 +71,49 @@ export class AppComponent {
 
   // isSmallScreen = this.breakpointObserver.isMatched('(max-width: 599px)');
 
-  constructor(private moviesServices: MoviesService, private breakpointObserver: BreakpointObserver,
-              private router: Router) {
+  constructor(private moviesServices: MoviesService,
+              private breakpointObserver: BreakpointObserver,
+              private router: Router,
+              public auth: AuthService,
+              private meta: Meta,
+              private docTitle: Title,
+              public dialog: MatDialog,
+              private renderer: Renderer2,
+              private elRef: ElementRef,
+              afuth: AngularFireAuth) {
     this.moviesServices.getGenres().subscribe(res => {
-      this.genres = res.genres.slice(0, 20);
+      // console.log('ggg ' + res.genres.length);
+      this.genres = res.genres;
+      this.meta.addTags([
+        {name: 'keywords', content: 'angular,google,appcomponent'},
+        {name: 'description', content: 'this is app component'},
+      ]);
+      // this.genres = res.genres.slice(0, 20);
     });
     this.isHide = true;
+
+    // this.dropdownDisplay = 'none';
+    // this.isDropdownDisplay = false;
+
+    // this.renderer.listen('window', 'click', (e: Event) => {
+    //   /**
+    //    * Only run when toggleButton is not clicked
+    //    * If we don't check this, all clicks (even on the toggle button) gets into this
+    //    * section which in the result we might never see the menu open!
+    //    * And the menu itself is checked here, and it's where we check just outside of
+    //    * the menu and button the condition abbove must close the menu
+    //    */
+    //   console.log('nn')
+    //   console.log('nn' + this.dropbtn.nativeElement)
+    //
+    //   if (e.target !== this.dropbtn.nativeElement) {
+    //     if (this.dropdownDisplay === 'block') {
+    //       console.log('nn')
+    //       this.dropdownDisplay = 'none';
+    //     }
+    //   }
+    // });
+
   }
 
 
@@ -113,7 +187,6 @@ export class AppComponent {
   }
 
 
-
   onMouseOver(index: number) {
     this.currentFocus = index;
     this.addActive();
@@ -126,17 +199,61 @@ export class AppComponent {
       this.removeActive();
     }
 
-    this.breakpointObserver.observe(['(min-width: 601px)']).subscribe((state: BreakpointState) => {
-      if (state.matches) {
-        this.transition = '.5s ease';
-        this.width = event.target.value ? '280px' : '150px';
-      } else {
-        this.transition = 'none';
-      }
-    });
+    // this.breakpointObserver.observe(['(min-width: 601px)']).subscribe((state: BreakpointState) => {
+    //   if (state.matches) {
+    //     this.transition = '.5s ease';
+    //     this.width = event.target.value ? '280px' : '150px';
+    //   } else {
+    //     this.transition = 'none';
+    //   }
+    // });
   }
 
   onFocus() {
     this.display = 'block';
+  }
+
+  openDialog() {
+    this.dialog.open(AuthModalComponent);
+  }
+
+  logout(event: Event) {
+    event.preventDefault();
+    // this.auth.logout();
+    this.auth.signOut()
+    // this.router.navigate(['']);
+  }
+
+  changeDropdown() {
+    console.log('ddd')
+
+    this.isDropdownDisplay = !this.isDropdownDisplay;
+
+    this.dropdownDisplay = this.dropdownDisplay === 'none' ? 'block' : 'none';
+  }
+
+
+  ngOnInit(): void {
+    this.isLoading = true;
+
+    console.log("INIT ------------ App component");
+
+    this.auth.user$.pipe(
+    ).subscribe(user => {
+      if (user) {
+        this.user = user;
+        console.log('user exist')
+
+      } else {
+        this.user = null;
+        console.log('user is null')
+      }
+      this.isLoading = false;
+      // console.log('user get ' )
+      // console.log('user get ' + user.displayName)
+    }, error => {
+      console.log(error)
+    }, () => console.log('obs completed')
+ );
   }
 }

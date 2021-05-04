@@ -1,22 +1,79 @@
 <mat-toolbar color="primary">
-  <button *ngIf="isHandset$ | async" (click)="sidenav.toggle()" mat-icon-button class="example-icon"
-          aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-<!--  <a mat-button [routerLink]="'/popular'">  Movie Finder </a>-->
+<!--  <button *ngIf="isHandset$ | async" (click)="sidenav.toggle()" mat-icon-button class="example-icon"-->
+<!--          aria-label="Example icon-button with menu icon">-->
+<!--    <mat-icon>menu</mat-icon>-->
+<!--  </button>-->
+  <!--  <a mat-button [routerLink]="'/popular'">  Movie Finder </a>-->
   <div class="inner-header">
-<!--    <mat-icon>movie</mat-icon>-->
-<!--      <a mat-button [routerLink]="'/popular'">  Movie Finder </a>-->
+    <!--        <mat-icon>movie</mat-icon>-->
+    <div>
+      <a class="logo" mat-button [routerLink]="'/popular'">
+        <!--            <mat-icon>movie</mat-icon>-->
+        <mat-icon>local_movies</mat-icon>
+        <!--            Popular </a>-->
+        <span>AMovie</span>
+      </a>
+    </div>
 
-<!--    <div>movi</div>-->
+
+    <!--    <div>movi</div>-->
     <div class="link-container">
 
-<!--      <mat-icon>movie</mat-icon>-->
+      <!--      <mat-icon>movie</mat-icon>-->
 
-<!--      <a mat-button [routerLink]="'/popular'"> <mat-icon>movie</mat-icon> </a>-->
-      <a mat-button [routerLink]="'/popular'"> Popular </a>
-      <a mat-button [routerLink]="'/top'"> Top Rated </a>
-      <a mat-button [routerLink]="'/upcoming'"> Upcoming </a>
+      <!--      <a mat-button [routerLink]="'/popular'"> <mat-icon>movie</mat-icon> </a>-->
+
+      <div class="dropdown">
+        <a mat-button routerLink="/"> Genres </a>
+        <div class="genre-dropdown-content">
+          <a class="genre-link genre-dropdown-content-link" mat-button *ngFor="let genre of genres"
+             [routerLink]="['genres', genre.name]" routerLinkActive="active">{{genre.name}} </a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a class="dropbtn" mat-button> Movies </a>
+        <div class="dropdown-content">
+          <a routerLink="/popular" mat-button>Popular</a>
+          <a routerLink="/top" mat-button>Top Rated</a>
+          <a routerLink="/upcoming" mat-button>Upcoming</a>
+        </div>
+
+      </div>
+<!--      <a mat-button routerLink="/streams"> {{!!auth.getCurrentUser()}} </a>-->
+      <a mat-button routerLink="/streams"> Streams </a>
+
+      <!--      <a mat-button routerLink="/streams"> {{auth.user$.getValue() ? auth.user$.getValue().uid: null}} </a>-->
+<!--      <a mat-button routerLink="/streams"> {{auth.getCurrentUser() ? auth.getCurrentUser().uid: null}} </a>-->
+
+
+      <!--      <a class="dropbtn" routerLink="/favorites" mat-button> Favorites </a>-->
+
+
+<!--      <div class="dropdown">-->
+<!--        <a class="dropbtn" mat-button> TV Shows </a>-->
+<!--        <div class="dropdown-content">-->
+<!--          <a routerLink="/tv/popular" mat-button>Popular</a>-->
+<!--          <a routerLink="/tv/top" mat-button>Top Rated</a>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+
+<!--      <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">-->
+<!--        Movies-->
+<!--        &lt;!&ndash;        <mat-icon>arrow_drop_down</mat-icon>&ndash;&gt;-->
+<!--      </button>-->
+<!--      <mat-menu #menu="matMenu">-->
+<!--              <span (mouseleave)="menuTrigger.closeMenu()">-->
+
+<!--&lt;!&ndash;        <a mat-button routerLink="/popular"> Movies </a>&ndash;&gt;-->
+<!--        <a routerLink="/popular" mat-menu-item>Popular</a>-->
+<!--        <a routerLink="/top" mat-menu-item>Top Rated</a>-->
+<!--        <a routerLink="/upcoming" mat-menu-item>Upcoming</a>-->
+<!--        </span>-->
+<!--      </mat-menu>-->
+      <!--      <a mat-button routerLink="/top"> Top Rated </a>-->
+      <!--      <a mat-button routerLink="/upcoming"> Upcoming </a>-->
     </div>
 
     <form id="form" autocomplete="off">
@@ -38,24 +95,83 @@
       </div>
     </form>
 
+<!--    auth.user$ | async as user-->
+    <div>
+<!--      <button class="sign" mat-button *ngIf="!isAuth()" (click)="openDialog()">Sign In</button>-->
+
+<!--      <button class="sign" mat-button *ngIf="!auth.isLoggedIn" (click)="openDialog()">Sign In</button>-->
+<!--      <button class="sign" mat-button (click)="openDialog()">{{auth.isAuthenticated()}}</button>-->
+<!--      <button mat-button (click)="logout()">Logout</button>-->
+<!--      <button mat-button >{{!!auth.user$}}</button>-->
+<!--      <button mat-button >{{!!(auth.getFirebaseUser() | async)}}</button>-->
+<!--      <div class="dropdown" *ngIf="auth.user$ | async as user; else login" >-->
+
+<!--      <ng-template>-->
+<!--        -->
+<!--      </ng-template>-->
+      <div class="dropdown userDropdown" *ngIf="user ; else login" >
+<!--        <a class="dropbtn"  mat-button> {{user.displayName}}</a>-->
+        <a class="dropbtn avatarDropBtn"  mat-button>         <span class="avatar ">{{user.displayName.charAt(0) }}</span>
+        </a>
+<!--        <span class="avatar ">{{user.displayName.charAt(0) }}</span>-->
+<!--        <div class="avatar"> {{user.displayName.charAt(0) }}</div>-->
+        <div class="dropdown-content">
+          <a routerLink="/favorites" mat-button>
+<!--            <mat-icon>favorite_border</mat-icon> -->
+            Favorites</a>
+          <a routerLink="/watchlist" mat-button>
+<!--            <mat-icon>bookmark_border</mat-icon> -->
+            Watchlist</a>
+<!--          <a routerLink="/top" mat-button>{{user.uid}}</a>-->
+<!--          <a routerLink="/top" mat-button>{{user | json}}</a>-->
+<!--          <a routerLink="/top" mat-button *ngIf="auth.test$ | async as any">{{any | json}}</a>-->
+<!--          <a routerLink="/top" mat-button></a>-->
+          <a href="#" (click)="logout($event)" mat-button>
+<!--            <mat-icon>logout</mat-icon> -->
+            Logout</a>
+        </div>
+      </div>
+
+      <ng-template #login >
+        <button *ngIf="!isLoading" class="sign" mat-button (click)="openDialog()">Sign In</button>
+<!--        <button  class="sign" mat-button (click)="openDialog()">Sign In</button>-->
+<!--        <a class="dropbtn"  mat-button>  </a>-->
+
+<!--        <button class="sign" hidden="hidden" mat-button (click)="openDialog()">User</button>-->
+      </ng-template>
+
+<!--      <a mat-button href="#">-->
+<!--        &lt;!&ndash;        <button mat-raised-button color="primary">Sign in</button>&ndash;&gt;-->
+<!--        <span>Sign In</span>-->
+<!--        &lt;!&ndash;        <span>Login</span>&ndash;&gt;-->
+<!--        &lt;!&ndash;      </a>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;      <a mat-button href="#">&ndash;&gt;-->
+<!--        &lt;!&ndash;        <span>Sign Up</span>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <span>Sign Up</span>&ndash;&gt;-->
+<!--      </a>-->
+    </div>
+
+
   </div>
 </mat-toolbar>
-
+<!--[style]="'display: none;'"-->
 <mat-sidenav-container>
-  <mat-sidenav #sidenav [autoFocus]="false" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-               [ngClass]="{'hidden': !(isHandset$ | async)}"
-               [opened]="!(isHandset$ | async)">
-    <mat-nav-list>
-      <a class="nav-link" mat-list-item routerLink="/popular" routerLinkActive="active">Popular</a>
-      <a class="nav-link" mat-list-item routerLink="/top" routerLinkActive="active">Top Rated</a>
-      <a class="nav-link" mat-list-item routerLink="/upcoming" routerLinkActive="active">Upcoming</a>
-      <a class="genre-link" mat-list-item *ngFor="let genre of genres" routerLink="/genres/{{genre.id}}/{{genre.name}}/"
-         routerLinkActive="active">{{genre.name}} </a>
-    </mat-nav-list>
-  </mat-sidenav>
+<!--  <mat-sidenav  #sidenav [autoFocus]="false" [mode]="(isHandset$ | async) ? 'over' : 'side'"-->
+<!--               [ngClass]="{'hidden': !(isHandset$ | async)}"-->
+<!--               [opened]="!(isHandset$ | async)">-->
+<!--    <mat-nav-list>-->
+<!--      <a class="nav-link" mat-list-item routerLink="/popular" routerLinkActive="active">Popular</a>-->
+<!--      <a class="nav-link" mat-list-item routerLink="/top" routerLinkActive="active">Top Rated</a>-->
+<!--      <a class="nav-link" mat-list-item routerLink="/upcoming" routerLinkActive="active">Upcoming</a>-->
+<!--&lt;!&ndash;      <a class="genre-link" mat-list-item *ngFor="let genre of genres"&ndash;&gt;-->
+<!--&lt;!&ndash;         [routerLink]="['genres', genre.name]" routerLinkActive="active">{{genre.name}} </a>&ndash;&gt;-->
+<!--    </mat-nav-list>-->
+<!--  </mat-sidenav>-->
   <mat-sidenav-content>
 
 
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+

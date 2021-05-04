@@ -25,32 +25,33 @@
 //}
 
 
-
-.movies  {
+.movies {
   //display: flex;
   //flex-wrap: wrap;
   //flex-direction: row;
   //justify-content: space-evenly;
-
-
-
   display: grid;
   //grid-template-columns: repeat(auto-fit, minmax(10rem, 17rem));
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 15.688rem));
-  justify-content: space-evenly;
+  //grid-template-columns: repeat(auto-fit, minmax(10rem, 15.688rem));
+  //grid-template-columns: repeat(auto-fit, minmax(10rem, 13.988rem));
+  grid-template-columns: repeat(5, 13.988rem);
+  justify-content: center;
   align-content: space-between;
   -webkit-box-align: start;
   align-items: start;
   //padding: 4rem 0px;
   //gap: 3rem 0.49rem;
 
-  gap: 3rem 3rem;
+  //gap: 2rem 1.65rem;
+  gap: 2rem 2rem;
+  //gap: 2rem 1.5rem;
+
 
 }
+
 .genre-container {
   //padding-left: 14px;
   padding-bottom: 40px;
-
 
 
   display: flex;
@@ -62,6 +63,11 @@ h3 {
   //padding-left: 25px;
   padding-left: 2.5%;
   text-transform: capitalize;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 11px;
 }
 
 .pagination {
@@ -115,6 +121,7 @@ h3 {
   cursor: default;
   //border: 1px solid #3f51b5;
 }
+
 .center {
   text-align: center;
 }
@@ -122,6 +129,7 @@ h3 {
 .disabled {
   pointer-events: none;
 }
+
 .pagination a:hover:not(.active) {
   color: #4CAF50;
   background-color: #ebedf8;
@@ -141,20 +149,52 @@ h3 {
 }
 
 .small-screen {
-  display: none!important;
+  display: none !important;
 }
 
 .pages {
   display: block;
 }
 
-@media screen and  (max-width: 638px) {
+@media screen and (max-width: 1350px) {
+  .movies {
+
+    grid-template-columns: repeat(4, 13.988rem);
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .movies {
+    gap: 2rem 1.5rem;
+  }
+
+}
+
+@media screen and (max-width: 1023px) {
+  .movies {
+    gap: 2rem 2rem;
+
+    grid-template-columns: repeat(2, 13.988rem);
+  }
+
+}
+
+@media screen and (max-width: 525px) {
+  .movies {
+    //gap: 2rem 2rem;
+
+    grid-template-columns: 13.988rem;
+  }
+
+}
+
+@media screen and (max-width: 638px) {
   .small-screen {
-    display: block!important;
+    display: block !important;
   }
 
   .pagination .pages {
-    display: none!important;
+    display: none !important;
   }
 
 }

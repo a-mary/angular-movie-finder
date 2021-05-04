@@ -1,117 +1,103 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Movie, MoviesService} from '../service/movies.service';
-import {ActivatedRoute} from '@angular/router';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {MoviesService} from '../services/movies.service';
+import {ActivatedRoute, ParamMap, UrlSegment} from '@angular/router';
+import {Genre, Movie, MoviePage, TvShow} from '../shared/interfaces';
+import {combineLatest, Observable, Subscription} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent implements OnInit, OnDestroy {
 
   title: string;
   movies: Movie[];
-  @Input()
-  similar: boolean;
-  @Input()
-  person: boolean;
+  tvShows: TvShow[];
+  // @Input()
+  // similar: boolean;
+  // @Input()
+  // person: boolean;
   genreId: string;
   currentPage: number;
   totalPages: number;
   pages: string[] = Array();
   active: boolean;
   routerLink: string;
+  request: Observable<any>;
 
-  constructor(
-    private moviesService: MoviesService,
-    private router: ActivatedRoute) {
+
+  constructor(private moviesService: MoviesService, private route: ActivatedRoute, public auth: AuthService) {
   }
 
   ngOnInit(): void {
     this.movies = null;
 
-    this.router.data.subscribe(data => {
+    combineLatest([this.route.queryParamMap, this.route.url]).subscribe(([qParams, urls]) => {
+      // console.log(pParams.get('name'));
+      // console.log(qParams);
+      // console.log(urls);
+      // console.log(this.tvShows + 'jjjj');
 
-      if (data.path === 'genres') {
-        this.router.paramMap.subscribe((params) => {
-          this.title = params.get('name');
-          this.genreId = params.get('id');
-          this.routerLink = '/genres/' + this.genreId + '/' + this.title + '/';
-          this.router.queryParamMap.subscribe((qParams) => {
-            this.moviesService.discoverMoviesByGenres(params.get('id'),
-              (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
-              this.movies = res.results;
-              this.totalPages = res.total_pages;
-              this.currentPage = res.page;
-              this.updatePageLinks();
-              this.active = this.currentPage === 1;
-            });
-          });
-        });
-      } else if (data.path === 'popular' || data.path === 'upcoming' || data.path === 'top') {
-        this.title = data.path;
-        this.routerLink = '/' + data.path;
-        this.router.queryParamMap.subscribe((qParams) => {
-          this.moviesService.getMovieList(data.path, (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
-            this.movies = res.results;
-            this.totalPages = res.total_pages;
-            this.currentPage = res.page;
+      this.getMovies(qParams.get('page') ? qParams.get('page') : '1', urls.map(segment => segment.path));
+    }, error => console.log('error.msg'));
+  }
+
+  getMovies(currentPage: string, path: string[]) {
+    if (path[0] === 'genres') {
+      this.title = path[1];
+      this.request = this.moviesService.getGenres().pipe(
+        map(res => String(res.genres.find(genre => genre.name === path[1]).id)),
+        switchMap((id: string) => {
+          return this.moviesService.discoverMoviesByGenres(id, currentPage);
+        }));
+    } else if (path[0] === 'popular' || path[0] === 'upcoming' || path[0] === 'top') {
+      this.title = path[0];
+      this.request = this.moviesService.getMovieList(path[0], currentPage);
+    } else if (path[0] === 'search') {
+      this.title = 'Search results';
+      this.request = this.moviesService.searchMovies(path[1], currentPage);
+    } else if (path[0] === 'movie') {
+      this.title = 'Recommended';
+      this.request = this.moviesService.getRecommendedMovies(path[1], currentPage);
+    } else if (path[0] === 'actor') {
+      this.title = 'Filmography';
+      this.request = this.moviesService.discoverMoviesByCast(path[1], currentPage);
+    } else if (path[0] === 'tv' && path[1] === 'popular') {
+      this.title = 'Popular TV Shows';
+      console.log(path[0] + ' ' + path[1]);
+      this.request = this.moviesService.getTvList(path[1], currentPage);
+    } else if (path[0] === 'tv' && path[1] === 'top') {
+      this.title = 'Popular TV Shows';
+      this.request = this.moviesService.getTvList(path[1], currentPage);
+    }
+
+    if (this.request) {
+      this.request.subscribe(response => {
+        this.routerLink = `/${path.join('/')}/`;
+        if (response.results.length > 0) {
+          if (path[0] === 'tv') {
+            this.tvShows = response.results;
+          } else {
+            this.movies = response.results;
+          }
+
+          this.totalPages = response.total_pages;
+            this.currentPage = response.page;
             this.updatePageLinks();
             this.active = this.currentPage === 1;
-          });
-        });
-      } else if (data.path === 'search') {
-        this.router.paramMap.subscribe((params) => {
-          const searchStr = params.get('title');
-          this.routerLink = '/search/' + searchStr;
-          this.router.queryParamMap.subscribe((qParams) => {
-            this.moviesService.searchMovies(searchStr, (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
-              this.title = 'Search results';
-              this.movies = res.results;
-              this.totalPages = res.total_pages;
-              this.currentPage = res.page;
-              this.updatePageLinks();
-              this.active = this.currentPage === 1;
-            });
-          });
-        });
-      } else if (this.similar) {
-        this.router.paramMap.subscribe((params) => {
-          this.routerLink = '/movie/' + params.get('id') + '/';
-          this.router.queryParamMap.subscribe((qParams) => {
-            this.moviesService.getRecommendedMovies(params.get('id'),
-              (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
-              this.title = 'Recommended';
-              if (res.results.length > 0) {
-                this.movies = res.results;
-                this.totalPages = res.total_pages;
-                this.currentPage = res.page;
-                this.updatePageLinks();
-                this.active = this.currentPage === 1;
-              }
-            });
-          });
-        });
-      } else if (this.person) {
-        this.router.paramMap.subscribe((params) => {
-          this.routerLink = '/actor/' + params.get('id') + '/';
-          this.router.queryParamMap.subscribe((qParams) => {
-            this.moviesService.discoverMoviesByCast(params.get('id'),
-              (qParams.get('page') ? qParams.get('page') : '1')).subscribe(res => {
-              this.title = 'Filmography';
-              if (res.results.length > 0) {
-                this.movies = res.results;
-                this.totalPages = res.total_pages;
-                this.currentPage = res.page;
-                this.updatePageLinks();
-                this.active = this.currentPage === 1;
-              }
-            });
-          });
-        });
+          // console.log('request');
+        }
+      });
+    }
+  }
 
-      }
-    });
+
+
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
   }
 
   updatePageLinks() {
@@ -128,9 +114,9 @@ export class MoviesComponent implements OnInit {
     }
   }
 
-   calculatePageNumber(i: number, currentPage: number, paginationRange: number, totalPages: number) {
+  calculatePageNumber(i: number, currentPage: number, paginationRange: number, totalPages: number) {
     const halfWay = Math.ceil(paginationRange / 2);
-    console.log(i);
+    // console.log(i);
     if (i === paginationRange) {
       return totalPages;
     } else if (i === 1) {

@@ -15,7 +15,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-const MaterialComponents = [
+const MaterialModules = [
   MatToolbarModule,
   MatButtonModule,
   MatIconModule,
@@ -35,11 +35,10 @@ const MaterialComponents = [
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    MaterialComponents
+    MaterialModules
   ],
   exports: [
-    MaterialComponents
+    MaterialModules
   ]
 })
 export class MaterialModule { }
