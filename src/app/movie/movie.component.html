@@ -1,186 +1,209 @@
-<img class="hidden" alt='backdrop' (load)="showMovie()"
-     src="https://image.tmdb.org/t/p/w1280/{{movieDetails.backdrop_path}}">
-<div *ngIf="isLoading && movieDetails.backdrop_path; else container " class="spinner">
+<!--<h2>movie</h2>-->
+<div *ngIf="errorMsg">{{errorMsg}}not found</div>
+<img class="hidden" alt='backdrop' (load)="isBackgroundLoading = false" [src]=[backdropPath]>
+
+
+<!--<div style="font-size: 18px">-->
+<!--&lt;!&ndash;  <div>{{(!user && isFavoriteLoading)}} and {{!!user}} and {{!isFavoriteLoading}}</div>&ndash;&gt;-->
+<!--  <div>isFavoriteLoading {{isFavoriteLoading}}</div>-->
+<!--  &lt;!&ndash;<div>!user {{!user}}</div>&ndash;&gt;-->
+<!--  &lt;!&ndash;<div>!!user {{!!user}}</div>&ndash;&gt;-->
+<!--  <div>user !== null {{user !== null}}; isUserLoading {{isUserLoading}}</div>-->
+<!--  <div>user is {{user | json}}; </div>-->
+<!--  <div>user is {{!!user}}; </div>-->
+<!--  <div >user auth {{authService.isAuthenticated | async}}; </div>-->
+<!--  <div >is loading{{authService.isLoading$ | async}}; </div>-->
+<!--  &lt;!&ndash;<div>!!user {{!!user}}</div>&ndash;&gt;-->
+<!--  <div>user !== null && isFavoriteLoading {{(user !== null && isFavoriteLoading)}}</div>-->
+<!--  &lt;!&ndash;<div>userF {{(!user && isFavoriteLoading )}}</div>&ndash;&gt;-->
+<!--  &lt;!&ndash;<div>{{(!user && isFavoriteLoading )}}</div>&ndash;&gt;-->
+<!--  &lt;!&ndash;<div>{{(!!user && !isFavoriteLoading )}}</div>&ndash;&gt;-->
+<!--  <div></div>-->
+<!--  <div>isBackLoading {{isBackgroundLoading}}</div>-->
+<!--</div>-->
+
+<!--<div *ngIf="isViewInit " class="spinner">-->
+<!--<div *ngIf="isFavoriteLoading" class="spinner">-->
+<div *ngIf="(authService.isLoading$ | async) || isBackgroundLoading || ((isFavoriteLoading && isWatchlistLoading && user)) " class="spinner">
   <mat-spinner [diameter]="70" strokeWidth="5"></mat-spinner>
   <!--  <mat-spinner  ></mat-spinner>-->
-
 </div>
-<ng-template #container>
+<!--<ng-template >-->
+<!--  *ngIf="!isLoading || backdropPath"-->
+<!--<div  class="background-container"-->
+<!--<div [hidden]="isBackgroundLoading  || (isFavoriteLoading && (user !== null))"  class="background-container"-->
+<!--<div [hidden]="isFavoriteLoading "  class="background-container"-->
+<div [hidden]="(authService.isLoading$ | async) || isBackgroundLoading  ||  (isFavoriteLoading && isWatchlistLoading && user)"  class="background-container"
+     [ngStyle]="{background: 'url(' + backdropPath + ')'}">
+  <div class="movie-wrap-container">
 
-  <div *ngIf="!isLoading || !movieDetails.backdrop_path" class="background-container"
-       [ngStyle]="{background: 'url(https://image.tmdb.org/t/p/w1280/' + movieDetails.backdrop_path + ')'}">
-    <div class="movie-wrap-container">
+    <div class="movie-container" *ngIf="movieDetails">
 
-      <div class="movie-container"
-           *ngIf="movieDetails">
+      <!--<editor-fold desc="Description">-->
+      <!--  <div style="position: fixed; z-index: -99; width: 100%; height: 100%">-->
+      <!--    <iframe width="100%" height="100%"-->
+      <!--            src="https://www.youtube.com/embed/tgbNymZ7vqY">-->
+      <!--    </iframe>-->
+      <!--&lt;!&ndash;    <iframe frameborder="0" height="100%" width="100%"&ndash;&gt;-->
+      <!--&lt;!&ndash;            src="https://youtu.be/mfmrPu43DF8"&ndash;&gt;-->
 
+      <!--&lt;!&ndash;    >&ndash;&gt;-->
+      <!--&lt;!&ndash;    </iframe>&ndash;&gt;-->
+      <!--  </div>-->
 
-        <!--  <div style="position: fixed; z-index: -99; width: 100%; height: 100%">-->
-        <!--    <iframe width="100%" height="100%"-->
-        <!--            src="https://www.youtube.com/embed/tgbNymZ7vqY">-->
-        <!--    </iframe>-->
-        <!--&lt;!&ndash;    <iframe frameborder="0" height="100%" width="100%"&ndash;&gt;-->
-        <!--&lt;!&ndash;            src="https://youtu.be/mfmrPu43DF8"&ndash;&gt;-->
+      <!--            src="https://youtube.com/embed/{{movieDetails.videos.results[0].key}}?autoplay=1&controls=0&showinfo=0&autohide=1"-->
 
-        <!--&lt;!&ndash;    >&ndash;&gt;-->
-        <!--&lt;!&ndash;    </iframe>&ndash;&gt;-->
-        <!--  </div>-->
+      <!--  <div style="position: fixed; top: 0; width: 100%; height: 100%; z-index: -1;">-->
+      <!--    <video id="video" style="width:100%; height:100%">-->
+      <!--      ....-->
+      <!--    </video>-->
+      <!--  </div>-->
 
-        <!--            src="https://youtube.com/embed/{{movieDetails.videos.results[0].key}}?autoplay=1&controls=0&showinfo=0&autohide=1"-->
+      <!--  <iframe width="100%" height="100%"-->
+      <!--          src="https://www.youtube.com/embed/tgbNymZ7vqY">-->
+      <!--  </iframe>-->
 
+      <!--    <div style="position: absolute; z-index: -99; top:0;  width: 100%; height: 100%">-->
 
-        <!--  <div style="position: fixed; top: 0; width: 100%; height: 100%; z-index: -1;">-->
-        <!--    <video id="video" style="width:100%; height:100%">-->
-        <!--      ....-->
-        <!--    </video>-->
-        <!--  </div>-->
+      <!--    <img width="100%" height="100%" src="https://image.tmdb.org/t/p/original/{{movieDetails.backdrop_path}}" alt="">-->
+      <!--    <img width="100%" height="100%" style="opacity: 0.5" src="https://image.tmdb.org/t/p/w1400_and_h1050_bestv2/{{movieDetails.backdrop_path}}" alt="">-->
+      <!--    <img src="https://image.tmdb.org/t/p/w1400_and_h450_bestv2/xl5oCFLVMo4d4Pgxvrf8Jmc2IlA.jpg" alt="">-->
+      <!--      <iframe width="100%" height="100%"-->
+      <!--              src="https://www.youtube.com/embed/tgbNymZ7vqY">-->
+      <!--      </iframe>-->
+      <!--    <iframe frameborder="0" height="100%" width="100%"-->
+      <!--            src="https://youtu.be/mfmrPu43DF8"-->
+      <!--            src="https://youtu.be/5ec6dab03d3557001eee7ca7"-->
 
-        <!--  <iframe width="100%" height="100%"-->
-        <!--          src="https://www.youtube.com/embed/tgbNymZ7vqY">-->
-        <!--  </iframe>-->
+      <!--    >-->
+      <!--    </iframe>-->
+      <!--    </div>-->
+      <!--</editor-fold>-->
 
-        <!--    <div style="position: absolute; z-index: -99; top:0;  width: 100%; height: 100%">-->
+      <div class="img-container">
+        <img class="poster" src="https://image.tmdb.org/t/p/w500/{{movieDetails.poster_path}}"
+             alt="poster" *ngIf="movieDetails.poster_path">
+        <img class="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg"
+             alt="poster" *ngIf="!movieDetails.poster_path">
+      </div>
 
-        <!--    <img width="100%" height="100%" src="https://image.tmdb.org/t/p/original/{{movieDetails.backdrop_path}}" alt="">-->
-        <!--    <img width="100%" height="100%" style="opacity: 0.5" src="https://image.tmdb.org/t/p/w1400_and_h1050_bestv2/{{movieDetails.backdrop_path}}" alt="">-->
-        <!--    <img src="https://image.tmdb.org/t/p/w1400_and_h450_bestv2/xl5oCFLVMo4d4Pgxvrf8Jmc2IlA.jpg" alt="">-->
-        <!--      <iframe width="100%" height="100%"-->
-        <!--              src="https://www.youtube.com/embed/tgbNymZ7vqY">-->
-        <!--      </iframe>-->
-        <!--    <iframe frameborder="0" height="100%" width="100%"-->
-        <!--            src="https://youtu.be/mfmrPu43DF8"-->
-        <!--            src="https://youtu.be/5ec6dab03d3557001eee7ca7"-->
+      <div class="content-container">
+        <h1>{{movieDetails.title}} </h1>
+        <!--        <div class="info">-->
+        <!--          &lt;!&ndash;      <span>{{movieDetails.runtime}} min</span>&ndash;&gt;-->
+        <!--          &lt;!&ndash;      /&ndash;&gt;-->
+        <!--          <span>{{movieDetails.release_date | date: 'yyyy'}}</span>-->
+        <!--        </div>-->
+        <p>{{movieDetails.tagline}}</p>
 
-        <!--    >-->
-        <!--    </iframe>-->
-        <!--    </div>-->
+        <span class="flex">
 
-        <div class="img-container">
-          <img class="poster" src="https://image.tmdb.org/t/p/w500/{{movieDetails.poster_path}}"
-               alt="poster" *ngIf="movieDetails.poster_path">
-          <img class="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg"
-               alt="poster" *ngIf="!movieDetails.poster_path">
-        </div>
+          <span><mat-icon>star</mat-icon></span>
+          <span class="vote_avg">{{movieDetails.vote_average}}</span>
+          <!--      <div class="info">-->
 
-        <div class="content-container">
-          <h1>{{movieDetails.title}}
-          </h1>
-          <!--        <div class="info">-->
-          <!--          &lt;!&ndash;      <span>{{movieDetails.runtime}} min</span>&ndash;&gt;-->
-          <!--          &lt;!&ndash;      /&ndash;&gt;-->
-          <!--          <span>{{movieDetails.release_date | date: 'yyyy'}}</span>-->
-          <!--        </div>-->
-          <p>{{movieDetails.tagline}}</p>
+            <span><mat-icon>schedule</mat-icon></span>
+            <span class="vote_avg">{{movieDetails.runtime | minToHrAndMin}}</span>
 
-          <!--          Хуйня-->
-          <span class="flex">
-
-    <!--        <span class="vote_avg">-->
-            <!--        {{movieDetails.vote_average}}-->
-            <!--        </span>-->
-            <span>
-      <!--        <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>-->
-              <mat-icon>star</mat-icon>
-            </span>
-
-              <span class="vote_avg">
-              {{movieDetails.vote_average}}
-              </span>
-            <!--      <div class="info">-->
-
-            <span>
-              <mat-icon>schedule</mat-icon>
-            </span>
-            <span class="vote_avg">{{movieDetails.runtime}}m</span>
-            <span>
-              <mat-icon>date_range</mat-icon>
-            </span>
+            <span><mat-icon>date_range</mat-icon></span>
             <span class="vote_avg">{{movieDetails.release_date | date: 'yyyy'}}</span>
-            <!--    </div>-->
+          <!--            <span class="vote_avg">{{movieDetails.release_date | date: 'mediumDate'}}</span>-->
+          <!--            <span class="vote_avg">{{movieDetails.release_date | date:'yyyy/MM/dd h:mm:ss a z'}}</span>-->
+          <!--            <span class="vote_avg">{{movieDetails.release_date }}</span>-->
+          <!--            <span class="vote_avg">{{"Jan 15, 2021" | date 'yyyy' }}</span>-->
+          <!--    </div>-->
           </span>
 
-          <!--    <span>{{movieDetails.runtime}} min</span>-->
+        <mat-chip-list class="genre" aria-label="Fish selection">
+          <mat-chip class="genre-chip" routerLink="/genres/{{genre.name}}"
+                    *ngFor="let genre of movieDetails.genres">{{genre.name}}</mat-chip>
+        </mat-chip-list>
 
-          <mat-chip-list class="genre" aria-label="Fish selection">
+        <!--<editor-fold desc="Description">-->
+        <!--    <mat-tab-group dynamicHeight>-->
+        <!--      <mat-tab label="Short tab">-->
+        <!--        <div class="example-small-box mat-elevation-z4">-->
+        <!--          Small content-->
+        <!--        </div>-->
+        <!--      </mat-tab>-->
+        <!--      <mat-tab label="Long tab">-->
+        <!--        <div class="example-large-box mat-elevation-z4">-->
+        <!--          Large content-->
+        <!--        </div>-->
+        <!--      </mat-tab>-->
+        <!--    </mat-tab-group>-->
 
-            <mat-chip class="genre-chip" routerLink="/genres/{{genre.id}}/{{genre.name}}"
-                      *ngFor="let genre of movieDetails.genres">{{genre.name}}</mat-chip>
-            <!--      <div class="info">-->
-            <!--        /-->
-            <!--        <span>{{movieDetails.release_date | date: 'yyyy'}}</span>-->
+        <!--    <mat-tab-group mat-stretch-tabs dynamicHeight mat-align-tabs="start">-->
+        <!--      <mat-tab label="Overview">-->
+        <!--        <p class="overview" #overview>-->
+        <!--          {{movieDetails.overview}}-->
+        <!--        </p>-->
+        <!--        <p>{{overview.offsetHeight}}</p>-->
 
-          </mat-chip-list>
+        <!--      </mat-tab>-->
+        <!--      <mat-tab label="Cast">-->
+        <!--        &lt;!&ndash;        <h2>Cast</h2>&ndash;&gt;-->
+        <!--        <div>-->
+        <!--          <mat-chip-list class="cast" >-->
+        <!--            <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts | slice:0:8">{{cast.name}}</mat-chip>-->
+        <!--          </mat-chip-list>-->
+        <!--        </div>-->
 
-          <!--    <mat-tab-group dynamicHeight>-->
-          <!--      <mat-tab label="Short tab">-->
-          <!--        <div class="example-small-box mat-elevation-z4">-->
-          <!--          Small content-->
-          <!--        </div>-->
-          <!--      </mat-tab>-->
-          <!--      <mat-tab label="Long tab">-->
-          <!--        <div class="example-large-box mat-elevation-z4">-->
-          <!--          Large content-->
-          <!--        </div>-->
-          <!--      </mat-tab>-->
-          <!--    </mat-tab-group>-->
+        <!--      </mat-tab>-->
+        <!--    </mat-tab-group>-->
+        <!--</editor-fold>-->
 
-          <!--    <mat-tab-group mat-stretch-tabs dynamicHeight mat-align-tabs="start">-->
-          <!--      <mat-tab label="Overview">-->
-          <!--        <p class="overview" #overview>-->
-          <!--          {{movieDetails.overview}}-->
-          <!--        </p>-->
-          <!--        <p>{{overview.offsetHeight}}</p>-->
+        <div class="movie-actions" *ngIf="user">
 
-          <!--      </mat-tab>-->
-          <!--      <mat-tab label="Cast">-->
-          <!--        &lt;!&ndash;        <h2>Cast</h2>&ndash;&gt;-->
-          <!--        <div>-->
-          <!--          <mat-chip-list class="cast" >-->
-          <!--            <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts | slice:0:8">{{cast.name}}</mat-chip>-->
-          <!--          </mat-chip-list>-->
-          <!--        </div>-->
-
-          <!--      </mat-tab>-->
-          <!--    </mat-tab-group>-->
-
-
-          <h2></h2>
-          <p class="overview">
-            {{movieDetails.overview}}
-          </p>
-
-          <mat-chip-list class="cast">
-            <!--      <span class="cast_h2">{{casts.length}}</span>-->
-
-            <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts | slice:0:8">{{cast.name}}</mat-chip>
-            <!--      <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts">{{cast.name}}</mat-chip>-->
-          </mat-chip-list>
+          <!--            <button mat-button><mat-icon >favorite_border</mat-icon>Favorites</button>-->
+          <!--            <button mat-fab><mat-icon>bookmark</mat-icon></button>-->
+          <!--                        <button mat-icon-button><mat-icon>bookmark</mat-icon> </button>-->
+          <!--            <button mat-raised-button><mat-icon>bookmark</mat-icon> Watchlist</button>-->
+          <!--            <button mat-stroked-button class="watchlist" (click)="toggleFavorite()"><mat-icon>{{favoriteIcon}}</mat-icon>favorites</button>-->
+          <app-favorite-button [movie]="movieDetails" (onLoad)="isFavoriteLoading = false" [user]="user"
+                               type="page"></app-favorite-button>
+          <app-watchlist-button [movie]="movieDetails" (onLoad)="isWatchlistLoading = false" [user]="user"
+                                type="pageWatchlist"></app-watchlist-button>
         </div>
 
+        <p class="overview">
+          {{movieDetails.overview}}
+        </p>
+
+
+        <mat-chip-list class="cast">
+          <!--      <span class="cast_h2">{{casts.length}}</span>-->
+
+          <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts | slice:0:8">{{cast.name}}</mat-chip>
+          <!--      <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts">{{cast.name}}</mat-chip>-->
+        </mat-chip-list>
 
       </div>
 
-      <div style="justify-content: center;display: flex; height: 500px;width: auto; margin-bottom: 30px;">
-        <iframe
-          width="100%"
-          height="100%"
-          [src]="video|safe"
-          frameborder="0"
-          allow="accelerometer;
+
+    </div>
+
+    <div *ngIf="video" style="justify-content: center;display: flex; height: 500px;width: 60%; margin: 0 auto;">
+      <iframe
+        width="100%"
+        height="100%"
+        [src]="video|safe"
+        frameborder="0"
+        allow="accelerometer;
              autoplay;
               clipboard-write;
               encrypted-media;
               gyroscope;
               picture-in-picture"
-          allowfullscreen>
-        </iframe>
-      </div>
-
-      <div>
-        <app-movies [similar]="true"></app-movies>
-      </div>
-
+        allowfullscreen>
+      </iframe>
     </div>
-  </div>
 
-</ng-template>
+    <div style="margin-top: 40px">
+      <app-movies></app-movies>
+    </div>
+
+  </div>
+</div>
+
+<!--</ng-template>-->

@@ -5,7 +5,18 @@ html, body {
   width: 100%;
   min-width: 327px;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  //overflow-y:scroll;
+
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-dialog-container {
+  //border-radius: 10px !important;
+}
+
+
 
 
 

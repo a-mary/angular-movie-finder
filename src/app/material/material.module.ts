@@ -14,8 +14,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatExpansionModule} from '@angular/material/expansion';
 
-const MaterialComponents = [
+const MaterialModules = [
   MatToolbarModule,
   MatButtonModule,
   MatIconModule,
@@ -29,17 +30,17 @@ const MaterialComponents = [
   MatInputModule,
   MatRippleModule,
   MatChipsModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatExpansionModule
 ];
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    MaterialComponents
+    MaterialModules
   ],
   exports: [
-    MaterialComponents
+    MaterialModules
   ]
 })
 export class MaterialModule { }

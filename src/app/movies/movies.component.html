@@ -1,10 +1,20 @@
 <div class="genre-container" *ngIf="movies !== null">
-  <h3>{{title === 'top' ? 'top rated' : title}}</h3>
+  <h2>{{(title === 'top' ? 'top rated' : title) | titlecase}} Movies </h2>
+<!--  <h2>{{(auth.user$ | async ) | json}}</h2>-->
   <div class="movies">
     <app-movie-card *ngFor="let movie of movies; let i = index;" [movie]="movie"></app-movie-card>
   </div>
 
 </div>
+
+<div class="genre-container" *ngIf="tvShows">
+  <h3>{{title === 'top' ? 'top rated' : title}}</h3>
+  <div class="movies">
+    <app-movie-card *ngFor="let tvShow of tvShows; let i = index;" [tvShow]="tvShow" ></app-movie-card>
+  </div>
+
+</div>
+
 
 <!--<div class="center">-->
 <!--  <div class="pagination">-->
@@ -20,10 +30,10 @@
 <!--  </div>-->
 <!--</div>-->
 
-<div *ngIf="movies" class="center">
+<div *ngIf="movies || tvShows"  class="center">
   <ul class="pagination">
     <li>
-      <a [class.disabled]="currentPage === 1" routerLink="{{routerLink}}"
+      <a [class.disabled]="currentPage === 1" [routerLink]="[routerLink]"
          [queryParams]="{page: currentPage - 1}">&#10094;</a>
     </li>
 
@@ -32,15 +42,15 @@
     </li>
 
     <li class="pages" *ngFor="let page of pages">
-      <a *ngIf="page === '1' " [class.active]="active" routerLink="{{routerLink}}"
+      <a *ngIf="page === '1' " [class.active]="active" [routerLink]="[routerLink]"
          [queryParams]="{page: page}">{{page}}</a>
-      <a *ngIf="page !== '1' && page !== '...' " routerLink="{{routerLink}}" [queryParams]="{page: page}"
+      <a *ngIf="page !== '1' && page !== '...' " [routerLink]="[routerLink]" [queryParams]="{page: page}"
          routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">{{page}}</a>
       <span *ngIf="page === '...' ">{{page}}</span>
     </li>
 
     <li>
-      <a href="#" [class.disabled]="currentPage === totalPages" routerLink="{{routerLink}}"
+      <a href="#" [class.disabled]="currentPage === totalPages" [routerLink]="[routerLink]"
          [queryParams]="{page: currentPage + 1}">&#10095;</a>
     </li>
   </ul>

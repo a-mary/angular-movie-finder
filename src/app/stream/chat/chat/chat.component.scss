@@ -1,0 +1,44 @@
+.chat-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a1a;
+  text-align: left;
+  overflow: hidden;
+}
+
+.chat-header {
+  //height: 48px;
+  height: 25px;
+  line-height: 23px;
+  padding: 1rem 14px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header__users mat-icon {
+  color: white;
+}
+
+.chat-input-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 2px solid #333;
+}
+
+.chat-owner {
+  font-size: 14px;
+  color: white;
+}
+
+.chat-room {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 60px;
+  bottom: 0;
+  font-size: 13px;
+}

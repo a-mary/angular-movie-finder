@@ -1,0 +1,134 @@
+<mat-toolbar color="primary">
+  <button *ngIf="(isHandset$ | async)"
+          (click)="sidenavToggle()"
+          mat-icon-button class="example-icon"
+          aria-label="icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="inner-header">
+
+    <div>
+      <a class="logo" mat-button [routerLink]="'/'">
+        <mat-icon>local_movies</mat-icon>
+        <span>AMovie</span>
+      </a>
+    </div>
+
+    <div class="link-container">
+
+      <div class="dropdown">
+        <a mat-button routerLink="/"> Genres </a>
+        <div class="genre-dropdown-content">
+          <a class="genre-link genre-dropdown-content-link" mat-button *ngFor="let genre of genres"
+             [routerLink]="['genres', genre.name]" routerLinkActive="active">{{genre.name}} </a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a class="dropbtn" mat-button> Movies </a>
+        <div class="dropdown-content">
+          <a routerLink="/popular" mat-button>Popular</a>
+          <a routerLink="/top" mat-button>Top Rated</a>
+          <a routerLink="/upcoming" mat-button>Upcoming</a>
+        </div>
+      </div>
+      <!--      <a mat-button routerLink="/streams"> {{!!auth.getCurrentUser()}} </a>-->
+<!--            <a mat-button routerLink="/streams"> Streams </a>-->
+      <!--      <a mat-button routerLink="/streams"> {{auth.user$.getValue() ? auth.user$.getValue().uid: null}} </a>-->
+      <!--      <a mat-button routerLink="/streams"> {{auth.getCurrentUser() ? auth.getCurrentUser().uid: null}} </a>-->
+
+
+      <!--      <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">-->
+      <!--        Movies-->
+      <!--        &lt;!&ndash;        <mat-icon>arrow_drop_down</mat-icon>&ndash;&gt;-->
+      <!--      </button>-->
+      <!--      <mat-menu #menu="matMenu">-->
+      <!--              <span (mouseleave)="menuTrigger.closeMenu()">-->
+
+      <!--&lt;!&ndash;        <a mat-button routerLink="/popular"> Movies </a>&ndash;&gt;-->
+      <!--        <a routerLink="/popular" mat-menu-item>Popular</a>-->
+      <!--        <a routerLink="/top" mat-menu-item>Top Rated</a>-->
+      <!--        <a routerLink="/upcoming" mat-menu-item>Upcoming</a>-->
+      <!--        </span>-->
+      <!--      </mat-menu>-->
+      <!--      <a mat-button routerLink="/top"> Top Rated </a>-->
+      <!--      <a mat-button routerLink="/upcoming"> Upcoming </a>-->
+    </div>
+
+    <form id="form" autocomplete="off">
+      <button type="submit" (click)="onSubmit(inputElement.value)">
+        <svg viewBox="0 0 1024 1024">
+          <path class="path1"
+                d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path>
+        </svg>
+      </button>
+      <input #inputElement placeholder="Search..." [style.width]="width" [style.transition]="transition"
+             (click)="onFocus()" (focusout)="onFocusout($event)" (keydown.arrowUp)="false"
+             (keyup)="onKeyUpEvent($event)">
+
+      <div *ngIf="inputElement.value" class="search-results" (mouseover)="isHide=false" (mouseout)="isHide=true"
+           [style.display]="display">
+        <div matRipple #movieTitle class="movieTitle" (mouseover)="onMouseOver(i)"
+             (click)="navigateToMovie(movie.id)"
+             *ngFor="let movie of movies | slice:0:5; let i=index; trackBy: trackByFn">{{movie.title}}</div>
+      </div>
+    </form>
+    <!--    auth.user$ | async as user-->
+    <div *ngIf="!(isHandset$ | async)">
+      <!--      <button class="sign" mat-button *ngIf="!isAuth()" (click)="openDialog()">Sign In</button>-->
+
+      <!--      <button class="sign" mat-button *ngIf="!auth.isLoggedIn" (click)="openDialog()">Sign In</button>-->
+      <!--      <button class="sign" mat-button (click)="openDialog()">{{auth.isAuthenticated()}}</button>-->
+      <!--      <button mat-button (click)="logout()">Logout</button>-->
+      <!--      <button mat-button >{{!!auth.user$}}</button>-->
+      <!--      <button mat-button >{{!!(auth.getFirebaseUser() | async)}}</button>-->
+      <!--      <div class="dropdown" *ngIf="auth.user$ | async as user; else login" >-->
+
+      <!--      <ng-template>-->
+      <!--        -->
+      <!--      </ng-template>-->
+      <div class="dropdown userDropdown" *ngIf="user; else login">
+        <!--        <a class="dropbtn"  mat-button> {{user.displayName}}</a>-->
+        <a class="dropbtn avatarDropBtn" mat-button> <span class="avatar ">{{user.displayName.charAt(0) }}</span>
+        </a>
+        <!--        <span class="avatar ">{{user.displayName.charAt(0) }}</span>-->
+        <!--        <div class="avatar"> {{user.displayName.charAt(0) }}</div>-->
+        <div class="dropdown-content">
+          <a routerLink="/favorites" mat-button>
+            <!--            <mat-icon>favorite_border</mat-icon> -->
+            Favorites</a>
+          <a routerLink="/watchlist" mat-button>
+            <!--            <mat-icon>bookmark_border</mat-icon> -->
+            Watchlist</a>
+          <!--          <a routerLink="/top" mat-button>{{user.uid}}</a>-->
+          <!--          <a routerLink="/top" mat-button>{{user | json}}</a>-->
+          <!--          <a routerLink="/top" mat-button *ngIf="auth.test$ | async as any">{{any | json}}</a>-->
+          <!--          <a routerLink="/top" mat-button></a>-->
+          <a href="#" (click)="logout($event)" mat-button>
+            <!--            <mat-icon>logout</mat-icon> -->
+            Logout</a>
+        </div>
+      </div>
+
+      <ng-template #login>
+        <button *ngIf="!user" class="sign" mat-button (click)="openDialog()">Sign In</button>
+        <!--        <button  class="sign" mat-button (click)="openDialog()">Sign In</button>-->
+        <!--        <a class="dropbtn"  mat-button>  </a>-->
+
+        <!--        <button class="sign" hidden="hidden" mat-button (click)="openDialog()">User</button>-->
+      </ng-template>
+
+      <!--      <a mat-button href="#">-->
+      <!--        &lt;!&ndash;        <button mat-raised-button color="primary">Sign in</button>&ndash;&gt;-->
+      <!--        <span>Sign In</span>-->
+      <!--        &lt;!&ndash;        <span>Login</span>&ndash;&gt;-->
+      <!--        &lt;!&ndash;      </a>&ndash;&gt;-->
+
+      <!--        &lt;!&ndash;      <a mat-button href="#">&ndash;&gt;-->
+      <!--        &lt;!&ndash;        <span>Sign Up</span>&ndash;&gt;-->
+      <!--        &lt;!&ndash;        <span>Sign Up</span>&ndash;&gt;-->
+      <!--      </a>-->
+    </div>
+
+  </div>
+</mat-toolbar>
