@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>Login</h2>
+<div mat-dialog-content>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <p>
+      <mat-form-field appearance="legacy">
+        <input type="text" matInput placeholder="Username" formControlName="username" required>
+        <mat-error *ngIf="form.get('username').hasError('required')">You must enter a value</mat-error>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="legacy">
+        <input type="password" matInput placeholder="Password" formControlName="password" required>
+        <mat-error *ngIf="form.get('password').hasError('required')">This field is required</mat-error>
+<!--        <mat-error *ngIf="form.get('password').errors">{{getErrorMessage()}}</mat-error>-->
+        <mat-error *ngIf="form.get('password').hasError('minlength')">Minimum {{form.get('password').errors.minlength.requiredLength}} characters</mat-error>
+      </mat-form-field>
+    </p>
+
+
+    <!--      <p *ngIf="error" class="error">-->
+    <!--        {{ error }}-->
+    <!--      </p>-->
+
+    <button class="login" type="submit" mat-dialog-close  mat-raised-button [disabled]="form.invalid || submitted">Login</button>
+
+    <div class="or">
+      <span>or</span>
+    </div>
+
+    <button mat-button color="primary" mat-dialog-close (click)="googleSignIn()">
+      <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+
+      Sign in with Google
+    </button>
+
+  </form>
+  <!--  This dialog showcases the title, close, content and actions elements.</div>-->
+  <!--<div mat-dialog-actions>-->
+  <!--  <button mat-button mat-dialog-close>Close</button>-->
+  <!--</div>-->
+  <!--<mat-card>-->
+  <!--  <mat-card-title>Login</mat-card-title>-->
+  <!--  <mat-card-content>-->
+  <!--    <form [formGroup]="form" (ngSubmit)="submit()">-->
+  <!--      <p>-->
+  <!--        <mat-form-field>-->
+  <!--          <input type="text" matInput placeholder="Username" formControlName="username">-->
+  <!--        </mat-form-field>-->
+  <!--      </p>-->
+
+  <!--      <p>-->
+  <!--        <mat-form-field>-->
+  <!--          <input type="password" matInput placeholder="Password" formControlName="password">-->
+  <!--        </mat-form-field>-->
+  <!--      </p>-->
+
+  <!--      <p *ngIf="error" class="error">-->
+  <!--        {{ error }}-->
+  <!--      </p>-->
+
+  <!--      <div class="button">-->
+  <!--        <button type="submit" mat-button>Login</button>-->
+  <!--      </div>-->
+
+  <!--    </form>-->
+  <!--  </mat-card-content>-->
+  <!--</mat-card>-->
+</div>

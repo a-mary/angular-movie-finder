@@ -1,0 +1,71 @@
+<mat-sidenav-container >
+<!--<mat-sidenav-container  [ngStyle]="{'background': 'url(assets/img/bg.png'+ ')'}">-->
+  <mat-sidenav #sidenav [autoFocus]="false" [mode]="'over'">
+    <mat-nav-list>
+      <mat-accordion *ngIf="user">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="avatar">{{user.displayName.charAt(0)}}</span>
+            </mat-panel-title>
+            <mat-panel-description class="mat-panel-description-username">
+              <div class="username">
+                {{(user.displayName.length > 6) ? (user.displayName|slice:0:6) + '..' : (user.displayName)}}
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <a class="nav-link" mat-list-item (click)="sidenav.close()" routerLink="/favorites" routerLinkActive="active">Favorites</a>
+          <a class="nav-link" mat-list-item (click)="sidenav.close()" routerLink="/watchlist" routerLinkActive="active">Watchlist</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-divider *ngIf="user"></mat-divider>
+
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="mat-panel-movie-title">
+              <mat-icon class="sidenav-icon">movie</mat-icon>
+              Movies
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a class="nav-link" mat-list-item routerLink="/popular" (click)="sidenav.close()" routerLinkActive="active">Popular</a>
+          <a class="nav-link" mat-list-item routerLink="/top" (click)="sidenav.close()" routerLinkActive="active">
+            Top Rated
+          </a>
+          <a class="nav-link" mat-list-item routerLink="/upcoming" (click)="sidenav.close()" routerLinkActive="active">Upcoming</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-divider></mat-divider>
+
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="mat-panel-movie-title">
+              <mat-icon class="sidenav-icon">category</mat-icon>
+              Genres
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <a class="nav-link" mat-list-item *ngFor="let genre of genres" (click)="sidenav.close()"
+             [routerLink]="['genres', genre.name]" routerLinkActive="active">{{genre.name}}</a>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-divider></mat-divider>
+
+      <a *ngIf="user" class="nav-link mat-panel-movie-title" mat-list-item href="#"
+         (click)="logout($event); sidenav.close()"
+         routerLinkActive="active">
+        <mat-icon class="logout-icon">logout</mat-icon>
+        Logout</a>
+
+      <a *ngIf="!user" class="nav-link mat-panel-movie-title login-link" mat-list-item href="#"
+         (click)="openDialog($event);">
+        <mat-icon class="login-icon">login</mat-icon>
+        Sign In</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

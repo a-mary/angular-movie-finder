@@ -1,0 +1,24 @@
+mat-icon{
+  color: #3f51b5;
+}
+
+.watchlist {
+  border-radius: 25px;
+  border-width: 1px;
+  border-color: #3f51b5;
+  color: #3f51b5;
+  margin: 4px;
+}
+
+.cardWatchlist mat-icon {
+  margin-right: 4px;
+}
+
+.watchlist mat-icon {
+  margin-right: 3px;
+}
+
+.cardWatchlist {
+  padding: 0 7px;
+
+}

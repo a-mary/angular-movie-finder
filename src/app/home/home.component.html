@@ -1,0 +1,93 @@
+<div class="movie-section" *ngIf="popularMovies !== null">
+  <!--  <h2>{{(auth.user$ | async ) | json}}</h2>-->
+
+
+  <!--  <h2 class="title">popular</h2>-->
+  <div class="movie-section-container">
+    <h2 class="title">popular</h2>
+    <a routerLink="/popular">
+      <button mat-button>See More</button>
+    </a>
+  </div>
+
+  <div class="slider">
+
+    <!--  <div #popularMoviesDiv (mousewheel)="mouseWheelHandler($event, popularMoviesDiv)" (mouseleave)="mouseUpHandler()" (mouseout)="mouseUpHandler()" (mouseup)="mouseUpHandler()" (mousedown)="mouseDownHandler($event, popularMoviesDiv)" class="movies noselect">-->
+    <div #popularMoviesDiv class="movies noselect">
+      <button class="scrollBtn leftScrollBtn" mat-button (click)="scrollToPrev(popularMoviesDiv)">
+        <mat-icon [inline]="true">arrow_back_ios</mat-icon>
+      </button>
+      <button class="scrollBtn rightScrollBtn" mat-button (click)="scrollToNext(popularMoviesDiv)">
+        <mat-icon [inline]="true">arrow_forward_ios</mat-icon>
+      </button>
+
+      <app-movie-card *ngFor="let movie of popularMovies; let i = index;" [movie]="movie"></app-movie-card>
+    </div>
+
+  </div>
+
+
+</div>
+
+<div class="movie-section" *ngIf="topMovies !== null">
+
+  <div class="movie-section-container">
+    <h2 class="title">Top Rated</h2>
+    <a routerLink="/top">
+    <button mat-button>See More</button>
+    </a>
+  </div>
+  <!--  <h2>{{(auth.user$ | async ) | json}}</h2>-->
+  <div class="slider">
+    <div #topMoviesDiv class="movies">
+      <button class="scrollBtn leftScrollBtn" mat-button (click)="scrollToPrev(topMoviesDiv)">
+        <mat-icon [inline]="true">arrow_back_ios</mat-icon>
+      </button>
+      <button class="scrollBtn rightScrollBtn" mat-button (click)="scrollToNext(topMoviesDiv)">
+        <mat-icon [inline]="true">arrow_forward_ios</mat-icon>
+      </button>
+      <app-movie-card *ngFor="let movie of topMovies; let i = index;" [movie]="movie"></app-movie-card>
+    </div>
+
+  </div>
+
+  <div class="movie-section" *ngIf="upcomingMovies !== null">
+    <!--  <h2>{{(auth.user$ | async ) | json}}</h2>-->
+    <div class="movie-section-container">
+      <h2 class="title">Upcoming Movies</h2>
+      <a routerLink="/upcoming">
+      <button mat-button>See More</button>
+      </a>
+    </div>
+    <div class="slider">
+      <div #upcomingMoviesDiv class="movies">
+        <button class="scrollBtn leftScrollBtn" mat-button (click)="scrollToPrev(upcomingMoviesDiv)">
+          <mat-icon [inline]="true">arrow_back_ios</mat-icon>
+        </button>
+        <button class="scrollBtn rightScrollBtn" mat-button (click)="scrollToNext(upcomingMoviesDiv)">
+          <mat-icon [inline]="true">arrow_forward_ios</mat-icon>
+        </button>
+        <app-movie-card *ngFor="let movie of upcomingMovies; let i = index;" [movie]="movie"></app-movie-card>
+      </div>
+    </div>
+
+  </div>
+
+  <!--<div class="center">-->
+  <!--  <div class="pagination">-->
+  <!--    <a href="#">&laquo;</a>-->
+  <!--    <a href="#">1</a>-->
+  <!--    <a href="#" class="active">2</a>-->
+  <!--    <a href="#">3</a>-->
+  <!--    <a href="#">4</a>-->
+  <!--    <a href="#">5</a>-->
+  <!--    <span>...</span>-->
+  <!--    <a href="#">6</a>-->
+  <!--    <a href="#">&raquo;</a>-->
+  <!--  </div>-->
+  <!--</div>-->
+
+
+  <!--<div class="genre-container">-->
+  <!--  <h2>There is no recommendation</h2>-->
+  <!--</div>-->

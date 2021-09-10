@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Cast, MovieDetails, MoviesService} from '../service/movies.service';
-import {ActivatedRoute} from '@angular/router';
+import {MoviesService} from '../services/movies.service';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {Cast, MovieDetails} from '../shared/interfaces';
+import {combineLatest, Observable, of} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {AuthService, User} from '../auth/auth.service';
+import {DatabaseService} from '../services/database.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-movie',
@@ -10,37 +16,105 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class MovieComponent implements OnInit {
 
-  defaultUrl = 'https://www.youtube.com/embed/';
+  baseUrl = 'https://www.youtube.com/embed/';
   video: string;
   movieDetails: MovieDetails;
   stars: string[] = Array();
   casts: Cast[];
   isLoading: boolean;
+  backdropPath: string;
+  defaultImgUrl = 'https://image.tmdb.org/t/p/w300/nmDqvEL5tqbjhbUEFSCQlZnXock.jpg';
+  favoriteIcon = 'favorite_border';
+  bookmarkIcon = 'bookmark_border';
+  fireAuthUser: firebase.User;
+  errorMsg: string;
+  user: User;
+  isUserLoading: boolean = true;
+  isFavoriteLoading: boolean = true;
+  isWatchlistLoading: boolean = true;
+  isBackgroundLoading: boolean = true;
 
-  constructor(private moviesServices: MoviesService, private router: ActivatedRoute, public dialog: MatDialog) {
+
+  constructor(
+    public authService: AuthService,
+    private moviesServices: MoviesService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private databaseService: DatabaseService) {
   }
 
   ngOnInit(): void {
+    // this.user = null;
+    this.isLoading = true;
+    this.isBackgroundLoading = true;
+    this.isUserLoading = true;
+    this.isFavoriteLoading = true;
+    this.isWatchlistLoading = true;
 
-    this.router.params.subscribe((params) => {
-        this.isLoading = true;
-        console.log(this.isLoading + ' load after init');
-        const param = 'id';
-        const id = params[param];
-        this.moviesServices.getMovie(id).subscribe(movie => {
-          this.movieDetails = movie;
-          this.video = this.defaultUrl + this.movieDetails.videos.results[0].key;
-          this.stars = [];
-          this.moviesServices.fillStarArr(movie.vote_average, this.stars);
-        });
-        this.moviesServices.getMovieCast(id).subscribe(cast => {
-          this.casts = cast;
-        });
+    this.isUserLoading = true
+    console.log('INIT Movie Component')
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        const id = params.get('id');
+        return combineLatest([this.moviesServices.getMovieDetails(id), this.moviesServices.getMovieCast(id)]);
+      })).subscribe(([movie, cast]) => {
+      this.movieDetails = movie;
+      // this.user = user ? user : null;
+      // if (user !== null) {
 
-      }
-    );
+      // this.user = user;
+      // }
+      // this.isUserLoading = false;
+      // console.log('user LOADED ' + (user === null ? null : this.user.displayName));
+      // console.log('user isNULL ' + (user === null));
+      this.backdropPath = movie.backdrop_path === null ?
+        this.defaultImgUrl : 'https://image.tmdb.org/t/p/w1280/'.concat(movie.backdrop_path);
+      this.video = this.movieDetails.videos.results.length === 0 ? undefined : this.baseUrl + this.movieDetails.videos.results[0].key;
+      this.stars = [];
+      this.moviesServices.fillStarArr(movie.vote_average, this.stars);
+      this.casts = cast;
+      this.isUserLoading = false
+    }, error => {
+
+    }, () => {
+      // this.isUserLoading = false
+    });
+
+    this.authService.user$.subscribe((user) => {
+
+      // if (user !== null) {
+      //
+      // this.user = user;
+      // }
+      this.user = user;
+      // this.isUserLoading = false;
+      console.log('Movie User is ' + (user === null ? null : this.user.displayName));
+    });
+
   }
 
+
+
+
+
+
+  setLoading(val: boolean) {
+    if (this.user)
+      this.isLoading = val;
+
+
+  }
+
+  // setBackgroundLoading() {
+  //   this.isBackgroundLoading = false;
+  // }
+  //
+  // setBackgroundLoading() {
+  //   this.isBackgroundLoading = false;
+  // }
+
+
+  //region Methods
   // openDialog() {
   //   const dialogRef = this.dialog.open(DialogBodyComponent, {
   //     data: {
@@ -62,10 +136,16 @@ export class MovieComponent implements OnInit {
   //   this.isLoading = false;
   //   console.log(this.isLoading + ' load do check');
   // }
+  //endregion
 
-  showMovie() {
-    // if ()
-    this.isLoading = false;
-    console.log(this.isLoading + ' show movie');
+
+
+  // showMovie() {
+  //   this.isLoading = false;
+  //   // console.log(this.isLoading + ' show movie');
+  // }
+
+  toggleBookmark() {
+    this.bookmarkIcon = this.bookmarkIcon == 'bookmark_border' ? 'bookmark' : 'bookmark_border';
   }
 }

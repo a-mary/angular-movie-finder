@@ -1,0 +1,110 @@
+//@media (min-width: 768px) {
+  .stream-meta-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 128px;
+    background-color: #1a1a1a;
+  }
+//}
+
+.stream-meta {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 24px;
+}
+
+
+
+.stream-meta__title {
+  margin-bottom: 16px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+.stream-meta-streamer {
+  //display: inline-flex;
+  //align-items: center;
+  //text-decoration: none;
+
+  display: inline-flex;
+  /* align-items: center; */
+  text-decoration: none;
+  flex-direction: column;
+}
+
+.stream-meta-streamer__avatar {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+  border-radius: 50%;
+}
+
+.stream-meta-streamer__nickname {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.stream-meta-buttons {
+  height: 48px;
+  display: inline-flex;
+  vertical-align: top;
+  align-items: center;
+  margin-left: 64px;
+  margin-top: 2px;
+}
+
+
+.btn-subscribe span {
+  margin-left: 8px;
+  font-weight: 500;
+  opacity: .7;
+}
+
+.stream-meta-buttons button {
+  margin-right: 24px;
+}
+.stream-meta-buttons button {
+  margin-right: 24px;
+}
+
+.stream-meta-streamer__status {
+  margin-top: 2px;
+  color: grey;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+
+
+
+.btn, .shop-add-product, .shop-add-section {
+  height: 32px;
+  padding: 0 1.2em;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  color: #333;
+  font-family: proxima_nova,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-donate {
+  background-color: #00af14;
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-subscribe {
+  background-color: #d90000;
+  color: #fff;
+  font-weight: 700;
+}

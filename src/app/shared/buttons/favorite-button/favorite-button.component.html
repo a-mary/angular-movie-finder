@@ -1,0 +1,7 @@
+<button *ngIf="type === 'card'" (click)="toggleFavorite(); $event.stopPropagation();$event.preventDefault();"
+        class="cardFav" mat-stroked-button>
+  <mat-icon>{{favoriteIcon}}</mat-icon> favorites
+</button>
+<button *ngIf="type === 'page'" (click)="toggleFavorite()" class="movieFav" mat-stroked-button>
+  <mat-icon>{{favoriteIcon}}</mat-icon> favorites
+</button>

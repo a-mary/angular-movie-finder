@@ -1,0 +1,4 @@
+<textarea style="font-size: 12px;"
+  class="chat-input" placeholder="Будьте вежливы в чате"
+  (keydown.enter)="send($event)"
+  [(ngModel)]="message"  maxlength="500" rows="1"></textarea>

@@ -1,0 +1,37 @@
+.chat-msg {
+  padding: 10px 30px;
+  color: #b3b3b3;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+  line-height: 150%;
+  word-wrap: break-word;
+}
+
+.chat-messages-list {
+  height: calc(100vh - 180px - 128px);
+  overflow: hidden;
+  //overflow-y: scroll;
+}
+
+.chat-messages-list:hover {
+  overflow-y: scroll;
+
+}
+
+.chat-messages-list::-webkit-scrollbar {
+  width: 8px;
+  //background-color: #3f51b5;
+  border-radius: 50px;
+}
+
+.chat-messages-list::-webkit-scrollbar-track {
+  //width: 8px;
+  //background-color: #3f51b5;
+  border-radius: 50px;
+}
+
+.chat-messages-list::-webkit-scrollbar-thumb {
+  //width: 8px;
+  background-color: #3f51b5;
+  border-radius: 50px;
+}
+

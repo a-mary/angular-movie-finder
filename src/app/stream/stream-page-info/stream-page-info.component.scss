@@ -1,0 +1,13 @@
+@media (min-width: 768px){
+.stream-info {
+  display: block;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px 24px;
+}
+}
+.stream-comments, .stream-desc {
+  width: 100%;
+  margin: 36px auto 0;
+}

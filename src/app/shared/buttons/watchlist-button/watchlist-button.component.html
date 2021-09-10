@@ -1,0 +1,3 @@
+<button *ngIf="type === 'cardWatchlist'" class="cardWatchlist" (click)="toggleBookmark();$event.stopPropagation();$event.preventDefault()" mat-stroked-button ><mat-icon>{{bookmarkIcon}}</mat-icon>watchlist</button>
+
+<button *ngIf="type === 'pageWatchlist'" mat-stroked-button class="watchlist" (click)="toggleBookmark()"><mat-icon>{{bookmarkIcon}}</mat-icon>watchlist</button>

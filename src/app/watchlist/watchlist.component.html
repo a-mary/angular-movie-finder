@@ -1,0 +1,26 @@
+<div *ngIf="(auth.isLoading$ | async); else favorites" class="spinner">
+  <mat-spinner [diameter]="70" strokeWidth="5"></mat-spinner>
+</div>
+<ng-template #favorites>
+
+<div class="genre-container" *ngIf="movies">
+
+  <h2>My Watchlist</h2>
+  <!--  <h2>{{movies | json}}</h2>-->
+  <div class="movies">
+
+    <!--    <h3>My Favorites</h3>-->
+
+    <app-movie-card *ngFor="let movie of movies; let i = index;" [favMovie]="movie"></app-movie-card>
+  </div>
+
+</div>
+
+<div class="genre-container" *ngIf="movies === null">
+
+  <h2>Your watchlist is empty</h2>
+
+
+</div>
+
+</ng-template>

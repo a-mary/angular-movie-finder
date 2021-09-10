@@ -1,0 +1,6 @@
+<app-toolbar [inputUser]="user" [genres]="genres" (onLogout)="logout()">
+</app-toolbar>
+<app-sidenav [inputUser]="user" [genres]="genres" (onLogout)="logout()">
+  <ng-content></ng-content>
+</app-sidenav>
+<app-footer></app-footer>

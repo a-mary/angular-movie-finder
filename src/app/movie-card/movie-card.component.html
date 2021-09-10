@@ -4,27 +4,157 @@
 
 
 <!--<div class="movie-card">-->
+<div *ngIf="(auth.isLoading$ | async) || (isFavoriteLoading && isWatchlistLoading && user) " class="spinner">
+<mat-spinner [style.position]="'absolute'"  [diameter]="50" strokeWidth="5"></mat-spinner>
+</div>
 
-<a routerLink="/movie/{{movie.id}}" [state]="stars">
-
+<a  [hidden]="(auth.isLoading$ | async) || (isFavoriteLoading && isWatchlistLoading && user)" routerLink="/movie/{{movie.id}}" [state]="stars">
 <!--  background: linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 29%), url(https://image.tmdb.org/t/p/w300//aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg);-->
+<!--  <mat-card [@movieCard]="state" [ngStyle]="{'background-image': 'linear-gradient(0deg, rgb(0 0 0) '+colorStop1+', rgb(255 255 255 / 0%) '+colorStop2+'), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">-->
+<!--  <mat-card [@movieCard]="state" [ngStyle]="{'background-image': 'linear-gradient(0deg, rgb(0 0 0) '+colorStop1+', rgb(255 255 255 / 0%) '+colorStop2+'), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">-->
+<!--  <mat-card [ngStyle]="{'background-image': 'url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">-->
+  <mat-card (mouseenter)="onMouseEnter()" (mouseleave)="top = '250px'">
 
-  <mat-card [ngStyle]="{'background': 'linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 40%), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">
+    <!--<editor-fold desc="Comments">-->
+    <!--  <mat-card [ngStyle]="{'background': 'linear-gradient(0deg, #000 0%, transparent 40%), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">-->
+<!--  <mat-card [ngStyle]="{'background': 'linear-gradient(0deg, #000 50%, transparent), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">-->
 <!--    <img mat-card-image alt='The movie titled {{movie.title}}' src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>-->
 <!--    <img mat-card-image alt="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg" *ngIf="!movie.poster_path">-->
+<!--    <div class="movie-card-actions" >-->
+      <!--      <button (click)="$event.stopPropagation();$event.preventDefault()" class="favBtn" mat-icon-button color="accent" aria-label="Example icon-button with a heart icon">-->
+      <!--        <mat-icon>bookmark</mat-icon>-->
+      <!--      </button>-->
+<!--      <button  (click)="$event.stopPropagation();$event.preventDefault()" class="bookmarkBtn" mat-icon-button color="primary" aria-label="Example icon-button with a heart icon">-->
+<!--        <mat-icon >bookmark</mat-icon>-->
+<!--      </button>-->
+<!--      <button (click)="$event.stopPropagation();$event.preventDefault()" class="favBtn" mat-icon-button color="accent" aria-label="Example icon-button with a heart icon">-->
+<!--        <mat-icon>favorite</mat-icon>-->
+<!--      </button>-->
+
+
+<!--      <button class="optionBtn" (click)="$event.stopPropagation();$event.preventDefault()"  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">-->
+<!--        <mat-icon>more_vert</mat-icon>-->
+<!--      </button>-->
+<!--      <mat-menu #menu="matMenu">-->
+<!--        <button (click)="$event.stopPropagation();$event.preventDefault()"  mat-menu-item>-->
+<!--          <mat-icon color="accent">favorite</mat-icon>-->
+<!--          <span>Favorite</span>-->
+<!--        </button>-->
+<!--        <button (click)="$event.stopPropagation();$event.preventDefault()"  mat-menu-item>-->
+<!--          <mat-icon color="primary">bookmark</mat-icon>-->
+<!--          <span>Watchlist</span>-->
+<!--        </button>-->
+<!--        <button (click)="$event.stopPropagation();$event.preventDefault()"  mat-menu-item>-->
+<!--          <mat-icon>notifications_off</mat-icon>-->
+<!--          <span>Disable alerts</span>-->
+<!--        </button>-->
+<!--      </mat-menu>-->
+      <!--      <mat-icon>favorite</mat-icon>-->
+
+<!--    </div>-->
+
+<!--      <div class="card-content" [style.bottom]="load === true ? '-82px' : '-124px'" >-->
+<!--      <div class="card-content" [style.bottom]="isAuth ? '-68px' : '-106px'" ;-->
+<!--      <div class="card-content" *ngIf="!isAuth" [style.bottom]="isAuth ? '-124px' : '-82px'" >-->
+<!--    [style] = "isAuth ? 'bottom: -58px' : '-55px'"-->
+<!--    [style.bottom] = "-(cardContent.offsetHeight - 92)+'px'-->
+<!--    [style]="'bottom: -' + (cardContent.offsetHeight - 92) + 'px;'"-->
+<!--    [style.bottom] = "-(contentHeight)+'px'"-->
+<!--    [style] = "isAuth ? 'bottom: -'+(movieCardContent.offsetHeight - 92) +'px' : '-'+(movieCardContent.offsetHeight - 92) +'px'"-->
+<!--    [style.bottom] = "-(authContentHeight)+'px'"-->
+    <!--</editor-fold>-->
+
+    <div #movieCardContent  [style.top]="top"  class="card-content" >
+<!--      <div class="card-content" >-->
+
+        <h2>{{movie.title}}</h2>
+
+        <div class="movie-card-info">
+          <span>{{movie.release_date | date: 'yyyy'}}</span>
+          <span class="stars">
+        <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>
+      </span>
+        </div>
+
+        <div class="info">
+          <p #overview >{{movie.overview}}</p>
+        </div>
+
+        <div class="movie-card-action" *ngIf="user">
+          <app-favorite-button [hidden]="isFavoriteLoading" (onLoad)="isFavoriteLoading = false" [user]="user" [movie]="movie" type="card"></app-favorite-button>
+          <app-watchlist-button [hidden]="isWatchlistLoading" [movie]="movie" (onLoad)="isWatchlistLoading = false" [user]="user" type="cardWatchlist"></app-watchlist-button>
+        </div>
+      </div>
+
+<!--
+&lt;!&ndash;        <mat-chip-list class="cast">&ndash;&gt;-->
+<!--          &lt;!&ndash;      <span class="cast_h2">{{casts.length}}</span>&ndash;&gt;-->
+
+<!--&lt;!&ndash;          <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts | slice:0:8">{{cast.name}}</mat-chip>&ndash;&gt;-->
+<!--          &lt;!&ndash;      <mat-chip routerLink="/actor/{{cast.id}}" *ngFor="let cast of casts">{{cast.name}}</mat-chip>&ndash;&gt;-->
+<!--&lt;!&ndash;        </mat-chip-list>&ndash;&gt;-->
+<!--      </div>-->
+
+    <div class="gradient"></div>
+    <div class="top-gradient"></div>
+    <img class="poster" src="https://image.tmdb.org/t/p/w300/{{poster}}" alt="poster">
+  </mat-card>
+</a>
+
+<!--<a #cardLink *ngIf="favMovie" routerLink="/movie/{{favMovie.movieId}}" [state]="stars">-->
+<!--  &lt;!&ndash;  background: linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 29%), url(https://image.tmdb.org/t/p/w300//aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg);&ndash;&gt;-->
+<!--  <mat-card  [ngStyle]="{'background': 'linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 40%), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">-->
+<!--    &lt;!&ndash;    <img mat-card-image alt='The movie titled {{movie.title}}' src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>&ndash;&gt;-->
+<!--    &lt;!&ndash;    <img mat-card-image alt="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg" *ngIf="!movie.poster_path">&ndash;&gt;-->
+<!--    <div  class="card-actions" >-->
+<!--&lt;!&ndash;      <button (click)="$event.stopPropagation();$event.preventDefault()" class="favBtn" mat-icon-button color="accent" aria-label="Example icon-button with a heart icon">&ndash;&gt;-->
+<!--&lt;!&ndash;        <mat-icon>bookmark</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
+<!--      <button (click)="$event.stopPropagation();$event.preventDefault()" class="favBtn" mat-icon-button color="accent" aria-label="Example icon-button with a heart icon">-->
+<!--        <mat-icon>favorite</mat-icon>-->
+<!--      </button>-->
+
+<!--&lt;!&ndash;      <mat-icon>favorite</mat-icon>&ndash;&gt;-->
+
+<!--    </div>-->
+
+
+
+<!--    <div class="fav-card-content">-->
+<!--      <h2>{{favMovie.title}}</h2>-->
+<!--      <span>{{favMovie.releaseDate | date: 'yyyy'}}</span>-->
+<!--      &lt;!&ndash;      <span>{{movie.vote_average}}</span>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <span class="vote_avg">{{movie.release_date | date: 'mediumDate'}}</span>&ndash;&gt;-->
+
+
+<!--      &lt;!&ndash;        <span class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon>9.8<mat-icon>star_border</mat-icon>9.8</span>&ndash;&gt;-->
+<!--      <span class="float-right stars">-->
+<!--        <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>-->
+<!--      </span>-->
+<!--    </div>-->
+
+
+<!--  </mat-card>-->
+<!--</a>-->
+
+
+<a *ngIf="tvShow" routerLink="/movie/{{tvShow.id}}" [state]="stars">
+  <!--  background: linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 29%), url(https://image.tmdb.org/t/p/w300//aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg);-->
+  <mat-card [ngStyle]="{'background': 'linear-gradient(0deg, rgb(0 0 0) 0%, rgb(255 255 255 / 0%) 40%), url(https://image.tmdb.org/t/p/w300/' + poster + ')'}">
+    <!--    <img mat-card-image alt='The movie titled {{movie.title}}' src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" *ngIf="movie.poster_path"/>-->
+    <!--    <img mat-card-image alt="poster" src="https://image.tmdb.org/t/p/w300//nmDqvEL5tqbjhbUEFSCQlZnXock.jpg" *ngIf="!movie.poster_path">-->
 
     <div class="card-content">
-      <h2>{{movie.title}}</h2>
-      <span>{{movie.release_date | date: 'yyyy'}}</span>
+      <h2>{{tvShow.name}}</h2>
+      <span>{{tvShow.first_air_date | date: 'yyyy'}}</span>
 
       <!--        <span class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon>9.8<mat-icon>star_border</mat-icon>9.8</span>-->
       <span class="float-right">
         <mat-icon *ngFor="let star of stars">{{star}}</mat-icon>
       </span>
     </div>
-
-
-
+  </mat-card>
+</a>
 <!--    <mat-card-content>-->
 <!--      <h2>{{movie.title}}</h2>-->
 <!--      <span>{{movie.release_date | date: 'yyyy'}}</span>-->
@@ -36,7 +166,6 @@
 <!--      &lt;!&ndash;        <span class="float-right"><mat-icon>star</mat-icon>9.8</span>&ndash;&gt;-->
 <!--      &lt;!&ndash;        <h2 class="float-right"><mat-icon>star</mat-icon>9.8<mat-icon>star_rate</mat-icon><mat-icon>star_border</mat-icon></h2>&ndash;&gt;-->
 <!--    </mat-card-content>-->
-  </mat-card>
 
   <!--    <div>-->
   <!--      <img width="200" alt='The movie titled {{movie.title}}'-->
@@ -52,5 +181,4 @@
   <!--      </div>-->
   <!--    </div>-->
 
-</a>
 <!--</div>-->

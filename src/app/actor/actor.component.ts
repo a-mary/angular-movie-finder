@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MoviesService, PersonDetail} from '../service/movies.service';
+import {MoviesService} from '../services/movies.service';
 import {ActivatedRoute} from '@angular/router';
+import {PersonDetail} from '../shared/interfaces';
 
 @Component({
   selector: 'app-actor',
@@ -15,11 +16,12 @@ export class ActorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.router.params.subscribe((params) => {
-        const param = 'id';
-        const id = params[param];
+    this.router.paramMap.subscribe((params) => {
+        const id = params.get('id');
         this.moviesServices.getPersonDetail(id).subscribe(person => {
           this.personDetail = person;
+        }, error => {
+          console.log(error.message);
         });
       }
     );

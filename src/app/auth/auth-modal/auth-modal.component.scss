@@ -1,0 +1,55 @@
+//:host {
+//  display: flex;
+//  justify-content: center;
+//  margin: 100px 0px;
+//}
+//
+//.mat-form-field {
+//  width: 100%;
+//  min-width: 300px;
+//}
+//
+//mat-card-title,
+//mat-card-content {
+//  display: flex;
+//  justify-content: center;
+//}
+//
+//.error {
+//  padding: 16px;
+//  width: 300px;
+//  color: white;
+//  background-color: red;
+//}
+//
+//.button {
+//  display: flex;
+//  justify-content: flex-end;
+//}
+
+form {
+  text-align: center;
+}
+
+h2{
+  text-align: center;
+
+}
+
+.login {
+  background-color: #4CAF50;
+  background-color: #3F51B5;
+  color: white;
+  margin-top: 15px;
+}
+
+.or {
+  padding-top: 15px;
+  padding-bottom: 7px;
+  color: #9E9E9E;
+}
+
+.mat-dialog-content {
+  padding-bottom: 8px;
+  padding-top: 9px;
+}
