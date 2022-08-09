@@ -110,7 +110,7 @@ export class AuthService {
         }
       })
     ).subscribe(user => {
-      console.log('auth is null '+(user === null))
+      // console.log('auth is null '+(user === null))
       if (user === null) {
         this.purgeAuth();
       } else {
@@ -118,7 +118,7 @@ export class AuthService {
       }
 
       this.isLoading$.next(false);
-      console.log('auth Loaded')
+      // console.log('auth Loaded')
 
       // if (user !== null)
       //   localStorage.setItem('user', JSON.stringify(user));
