@@ -88,7 +88,7 @@ export class MovieComponent implements OnInit {
       // }
       this.user = user;
       // this.isUserLoading = false;
-      console.log('Movie User is ' + (user === null ? null : this.user.displayName));
+      // console.log('Movie User is ' + (user === null ? null : this.user.displayName));
     });
 
   }

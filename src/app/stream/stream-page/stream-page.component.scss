@@ -20,6 +20,134 @@
   height: calc(100vh - 60px - 128px);
 }
 
+.theater-button {
+  height: 1.8rem;
+  color: red;
+  z-index: 3;
+  /* height: fit-content; */
+  text-align: center;
+  //width: 1.8rem;
+}
+
+.theater-button:hover{
+  //pointer-events: ;
+  cursor: pointer;
+}
+
+.stream-theater-mod .player{
+  //position: absolute;
+  //top: 0;
+  //height: 100vh;
+
+
+}
+
+.stream-theater-mod {
+  left: 0px;
+  position: fixed;
+  z-index: 3000;
+  height: 100%;
+  top: 0px;
+  max-height: 100vh;
+  transform: scale(1);
+  //width: calc(100% - 34rem);
+}
+
+.player-controls {
+  color: #848e9c;
+
+  font-size: 13px;
+  //display: flex;
+  //flex-direction: column;
+  //flex: 1 1 auto;
+  //width: 100%;
+
+  //flex-direction: column-reverse;
+  //margin: 0 4px;
+  //height: 0;
+  //margin: 0 auto;
+  //min-height: auto;
+  z-index: 6;
+  //
+  //flex: 1 1 auto;
+  position: relative;
+  //left: 5px;
+  //margin-left: 16px;
+  //top: 18px;
+  //top: 7px;
+
+  margin-right: 9px;
+  float: right;
+  //height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+
+  //position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+
+  //transition: none 200ms ease 0ms;
+  //transform: translateX(100%);
+  //transform: translateX(0px);
+  //transition: bottom .3s ease .3s,opacity .3s ease;
+  //transition: all .5s ease;
+  //transition: all .3s ease 0s;
+  transition: right .3s ease 0s;
+
+  right: -50px;
+  //position: relative;
+
+}
+
+.video:hover .player-controls {
+  //transform: translateX(0px);
+
+  right: 0;
+
+}
+
+.player-theatre-mode-button {
+  width: 1.8rem;
+  height: 1.8rem;
+  //margin: 0rem 1rem 1rem 0rem !important;
+  border-radius: 0.4rem !important;
+  display: flex !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  vertical-align: baseline;
+
+  flex-direction: column !important;
+  border-radius: 0.4rem !important;
+  //padding-top: 1rem !important;
+  -webkit-box-pack: center !important;
+  justify-content: center !important;
+  -webkit-box-align: center !important;
+  align-items: center !important;
+
+  display: inline-flex;
+
+
+  svg {
+    height: 1.8rem;
+  }
+
+  mat-icon {
+    color: white;
+  }
+
+  button{
+    background: transparent;
+    min-width: 2.8rem;
+  }
+}
+
+::ng-deep body .chat {
+  //height: 0;
+  //height: 0;
+  //display: none;
+}
 
 .video {
   position: relative;
@@ -52,6 +180,7 @@
 .chat {
   flex-basis: 411px;
   flex-grow: 0;
+  z-index: 99;
 }
 
 

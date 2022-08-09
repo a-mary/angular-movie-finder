@@ -70,10 +70,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     else
       el.scrollLeft = el.scrollWidth;
 
-    console.log(el.scrollLeft);
-    console.log(el.scrollWidth);
-    console.log(el.clientWidth);
-    console.log(scrollSize);
+    // console.log(el.scrollLeft);
+    // console.log(el.scrollWidth);
+    // console.log(el.clientWidth);
+    // console.log(scrollSize);
     // console.log(this.el.nativeElement.scrollWidth-225);
 
 

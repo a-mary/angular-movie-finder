@@ -17,7 +17,31 @@ body {
 }
 
 
+//theatre start
+body.theatre  {
+  height: 100%;
+  overflow-y: hidden;
+}
 
+body.theatre mat-toolbar{
+  display: none;
+}
+
+body.theatre .chat-messages-list {
+  //height: calc(100vh - 128px);
+  //height: calc(100vh - 128px);
+  height: calc(100vh - 118px);
+}
+
+body {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+body::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+//theatre end
 
 
 //* {

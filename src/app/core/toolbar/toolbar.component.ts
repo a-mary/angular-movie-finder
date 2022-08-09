@@ -103,7 +103,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnChanges {
     this.moviesServices.searchMovies(event.target.value, '1').subscribe(res => {
       this.title = 'Search results';
       this.movies = res.results;
-      console.log(event.key.toString());
+      // console.log(event.key.toString());
       // console.log(this.currentFocus);
 
       if (event.key === 'ArrowDown') {
@@ -124,7 +124,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnChanges {
         this.currentFocus = -1;
       }
 
-      console.log(this.currentFocus);
+      // console.log(this.currentFocus);
 
       if (event.key !== 'Enter') {
         this.display = 'block';
